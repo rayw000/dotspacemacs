@@ -82,7 +82,7 @@ This function should only modify configuration layer settings."
    ;; `dotspacemacs/user-config'. To use a local version of a package, use the
    ;; `:location' property: '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages '(ag)
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -558,8 +558,11 @@ This function is called at the very end of Spacemacs initialization."
    ;; If you edit it by hand, you could mess it up, so be careful.
    ;; Your init file should contain only one such instance.
    ;; If there is more than one, they won't work right.
+   '(ag-highlight-search t)
    '(company-tooltip-limit 20)
    '(evil-want-Y-yank-to-eol nil)
+   '(package-selected-packages
+     '(yasnippet-snippets ws-butler which-key wgrep uuidgen use-package unkillable-scratch unfill undo-tree treemacs-projectile treemacs-persp treemacs-magit treemacs-icons-dired treemacs-all-the-icons symon string-inflection spaceline-all-the-icons smex smeargle smartparens seti-theme reveal-in-osx-finder persistent-scratch pcre2el password-generator overseer osx-trash osx-dictionary osx-clipboard nameless mwim move-text magit-svn magit-section magit-gitflow macrostep lorem-ipsum link-hint launchctl ivy-yasnippet ivy-xref ivy-hydra ivy-avy hybrid-mode hungry-delete helm-make gitignore-templates gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link fuzzy forge font-lock+ flyspell-correct-ivy flycheck-pos-tip flycheck-package flycheck-elsa flx fancy-battery eyebrowse expand-region evil-mc eval-sexp-fu emr elisp-slime-nav editorconfig dotenv-mode dired-quick-sort diminish diff-hl counsel-projectile company clean-aindent-mode browse-at-remote bind-map auto-yasnippet auto-dictionary auto-compile async aggressive-indent ac-ispell))
    '(scroll-bar-mode nil))
   (custom-set-faces
    ;; custom-set-faces was added by Custom.
@@ -573,5 +576,6 @@ This function is called at the very end of Spacemacs initialization."
    '(company-tooltip-common ((t (:foreground "orange1"))))
    '(company-tooltip-selection ((t (:background "DeepSkyBlue4"))))
    '(fringe ((t (:inherit default))))
-   '(highlight ((t (:background "chartreuse4")))))
+   '(highlight ((t (:background "chartreuse4"))))
+   '(match ((t (:inherit default :foreground "red" :background "#151718" :weight bold)))))
   )
