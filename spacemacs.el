@@ -577,5 +577,5 @@ This function is called at the very end of Spacemacs initialization."
    '(company-tooltip-selection ((t (:background "DeepSkyBlue4"))))
    '(fringe ((t (:inherit default))))
    '(highlight ((t (:background "chartreuse4"))))
-   '(match ((t (:inherit default :foreground "red" :background "#151718" :weight bold)))))
+   '(match ((t (:inherit default :background "#151718" :foreground "red" :weight extra-bold)))))
   )
