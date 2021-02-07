@@ -540,7 +540,7 @@ Put your configuration code here, except for variables that should be set
 before packages are loaded."
 (global-set-key (kbd "M-`") 'other-window)
 (when (configuration-layer/package-used-p 'magit)
-  (global-set-key (kbd "M-<f12>") 'magit))
+  (global-set-key (kbd "M-m M-m") 'magit))
 (when (configuration-layer/layer-used-p'version-control)
   (global-set-key (kbd "C-c C-n") 'spacemacs/vcs-next-hunk)
   (global-set-key (kbd "C-c C-p") 'spacemacs/vcs-previous-hunk))
