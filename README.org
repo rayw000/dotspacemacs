@@ -1,0 +1,3 @@
+#+TITLE: My .spacemacs configuration
+
+This is my own ~.spacemacs~ configuration.
