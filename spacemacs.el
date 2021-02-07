@@ -532,19 +532,25 @@ dump."
   )
 
 (defun dotspacemacs/user-config ()
-"Configuration for user code:
+  "Configuration for user code:
 This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
-(global-set-key (kbd "M-`") 'other-window)
-(when (configuration-layer/package-used-p 'magit)
-  (global-set-key (kbd "M-m M-m") 'magit))
-(when (configuration-layer/layer-used-p'version-control)
-  (global-set-key (kbd "C-c C-n") 'spacemacs/vcs-next-hunk)
-  (global-set-key (kbd "C-c C-p") 'spacemacs/vcs-previous-hunk))
-(global-set-key (kbd "C-c C-f") 'find-name-dired)
-(add-hook 'emacs-lisp-mode-hook 'aggressive-indent-mode))
+  (global-set-key (kbd "M-`") 'other-window)
+  (when (configuration-layer/package-used-p 'magit)
+    (global-set-key (kbd "M-m M-m") 'magit))
+  (when (configuration-layer/layer-used-p'version-control)
+    (global-set-key (kbd "C-c C-n") 'spacemacs/vcs-next-hunk)
+    (global-set-key (kbd "C-c C-p") 'spacemacs/vcs-previous-hunk))
+  (global-set-key (kbd "C-c C-f") 'find-name-dired)
+  (add-hook 'emacs-lisp-mode-hook 'aggressive-indent-mode)
+  (defun package--save-selected-packages (&optional value)
+    "Set and (don't!) save `package-selected-packages' to VALUE."
+    (when value
+      (setq package-selected-packages value))
+    (unless after-init-time
+      (add-hook 'after-init-hook #'package--save-selected-packages))))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
@@ -561,8 +567,6 @@ This function is called at the very end of Spacemacs initialization."
    '(ag-highlight-search t)
    '(company-tooltip-limit 20)
    '(evil-want-Y-yank-to-eol nil)
-   '(package-selected-packages
-     '(yasnippet-snippets ws-butler which-key wgrep uuidgen use-package unkillable-scratch unfill undo-tree treemacs-projectile treemacs-persp treemacs-magit treemacs-icons-dired treemacs-all-the-icons symon string-inflection spaceline-all-the-icons smex smeargle smartparens seti-theme reveal-in-osx-finder persistent-scratch pcre2el password-generator overseer osx-trash osx-dictionary osx-clipboard nameless mwim move-text magit-svn magit-section magit-gitflow macrostep lorem-ipsum link-hint launchctl ivy-yasnippet ivy-xref ivy-hydra ivy-avy hybrid-mode hungry-delete helm-make gitignore-templates gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link fuzzy forge font-lock+ flyspell-correct-ivy flycheck-pos-tip flycheck-package flycheck-elsa flx fancy-battery eyebrowse expand-region evil-mc eval-sexp-fu emr elisp-slime-nav editorconfig dotenv-mode dired-quick-sort diminish diff-hl counsel-projectile company clean-aindent-mode browse-at-remote bind-map auto-yasnippet auto-dictionary auto-compile async aggressive-indent ac-ispell))
    '(scroll-bar-mode nil))
   (custom-set-faces
    ;; custom-set-faces was added by Custom.
