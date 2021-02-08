@@ -38,21 +38,11 @@ This function should only modify configuration layer settings."
      ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
      ;; `M-m f e R' (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     spacemacs-editing
-     spacemacs-modeline
-     spacemacs-layouts
      (auto-completion :variables
                       company-tooltip-limit 20
                       company-idle-delay .1
                       tab-always-indent 'complete)
      better-defaults
-     (osx :variables
-          osx-command-as 'meta
-          osx-function-as nil
-          osx-right-command-as 'super
-          osx-right-option-as 'left
-          osx-right-control-as 'left
-          osx-swap-option-and-command nil)
      emacs-lisp
      (git :variables
           magit-diff-refine-hunk t)
@@ -60,18 +50,29 @@ This function should only modify configuration layer settings."
      ivy
      ;; lsp
      ;; markdown
+     mu4e
      multiple-cursors
      ;; org
      ;; (shell :variables
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
+     spacemacs-editing
+     spacemacs-modeline
+     spacemacs-layouts
      spell-checking
+     (osx :variables
+          osx-command-as 'meta
+          osx-function-as nil
+          osx-right-command-as 'super
+          osx-right-option-as 'left
+          osx-right-control-as 'left
+          osx-swap-option-and-command nil)
      syntax-checking
+     (treemacs :variables
+               treemacs-use-all-the-icons-theme t)
      (version-control :variables
                       version-control-diff-side 'left
-                      version-control-diff-tool 'diff-hl)
-     (treemacs :variables
-               treemacs-use-all-the-icons-theme t))
+                      version-control-diff-tool 'diff-hl))
 
 
    ;; List of additional packages that will be installed without being wrapped
