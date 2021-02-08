@@ -82,7 +82,7 @@ This function should only modify configuration layer settings."
    ;; `dotspacemacs/user-config'. To use a local version of a package, use the
    ;; `:location' property: '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
-   dotspacemacs-additional-packages '(ag)
+   dotspacemacs-additional-packages '(ag visual-regexp)
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -545,6 +545,8 @@ before packages are loaded."
     (global-set-key (kbd "C-c C-p") 'spacemacs/vcs-previous-hunk))
   (global-set-key (kbd "C-c C-f") 'find-name-dired)
   (add-hook 'emacs-lisp-mode-hook 'aggressive-indent-mode)
+  (when (fboundp 'vr/replace)
+    (global-set-key (kbd "C-c C-/") 'vr/replace))
   (defun package--save-selected-packages (&optional value)
     "Set and (don't!) save `package-selected-packages' to VALUE."
     (when value
