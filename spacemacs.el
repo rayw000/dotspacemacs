@@ -545,6 +545,24 @@ before packages are loaded."
     (global-set-key (kbd "C-c C-p") 'spacemacs/vcs-previous-hunk))
   (global-set-key (kbd "C-c C-f") 'find-name-dired)
   (add-hook 'emacs-lisp-mode-hook 'aggressive-indent-mode)
+  (defun split-window-horizontally-instead ()
+    "Kill any other windows and re-split such that the current window is on the top half of the frame."
+    (interactive)
+    (let ((other-buffer (and (next-window) (window-buffer (next-window)))))
+      (delete-other-windows)
+      (split-window-horizontally)
+      (when other-buffer
+        (set-window-buffer (next-window) other-buffer))))
+  (defun split-window-vertically-instead ()
+    "Kill any other windows and re-split such that the current window is on the left half of the frame."
+    (interactive)
+    (let ((other-buffer (and (next-window) (window-buffer (next-window)))))
+      (delete-other-windows)
+      (split-window-vertically)
+      (when other-buffer
+        (set-window-buffer (next-window) other-buffer))))
+  (global-set-key (kbd "C-x |") 'split-window-horizontally-instead)
+  (global-set-key (kbd "C-x _") 'split-window-vertically-instead)
   (when (fboundp 'vr/replace)
     (global-set-key (kbd "C-c C-/") 'vr/replace))
   (defun package--save-selected-packages (&optional value)
