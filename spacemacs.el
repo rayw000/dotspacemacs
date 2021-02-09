@@ -43,19 +43,21 @@ This function should only modify configuration layer settings."
                       company-idle-delay .1
                       tab-always-indent 'complete)
      better-defaults
+     csv
      emacs-lisp
      (git :variables
           magit-diff-refine-hunk t)
      ;; helm
      ivy
+     javascript
      ;; lsp
      ;; markdown
-     mu4e
      multiple-cursors
      ;; org
      ;; (shell :variables
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
+     python
      spacemacs-editing
      spacemacs-modeline
      spacemacs-layouts
@@ -68,6 +70,7 @@ This function should only modify configuration layer settings."
           osx-right-control-as 'left
           osx-swap-option-and-command nil)
      syntax-checking
+     tern
      (treemacs :variables
                treemacs-use-all-the-icons-theme t)
      (version-control :variables
@@ -538,6 +541,11 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
+  (when (configuration-layer/layer-used-p 'mu4e)
+    (if-let ((mu4e-context-file "~/.mu4e.el")
+             (exist (file-exists-p mu4e-context-file)))
+        (load-file mu4e-context-file)
+      (warn "%s file not found.")))
   (global-set-key (kbd "M-`") 'other-window)
   (when (configuration-layer/package-used-p 'magit)
     (global-set-key (kbd "M-m M-m") 'magit))
@@ -565,13 +573,7 @@ before packages are loaded."
   (global-set-key (kbd "C-x |") 'split-window-horizontally-instead)
   (global-set-key (kbd "C-x _") 'split-window-vertically-instead)
   (when (fboundp 'vr/replace)
-    (global-set-key (kbd "C-c C-/") 'vr/replace))
-  (defun package--save-selected-packages (&optional value)
-    "Set and (don't!) save `package-selected-packages' to VALUE."
-    (when value
-      (setq package-selected-packages value))
-    (unless after-init-time
-      (add-hook 'after-init-hook #'package--save-selected-packages))))
+    (global-set-key (kbd "C-c C-/") 'vr/replace)))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
@@ -586,8 +588,26 @@ This function is called at the very end of Spacemacs initialization."
    ;; Your init file should contain only one such instance.
    ;; If there is more than one, they won't work right.
    '(ag-highlight-search t)
+   '(ansi-color-names-vector
+     ["#0a0814" "#f2241f" "#67b11d" "#b1951d" "#4f97d7" "#a31db1" "#28def0" "#b2b2b2"])
    '(company-tooltip-limit 20)
    '(evil-want-Y-yank-to-eol nil)
+   '(hl-todo-keyword-faces
+     '(("TODO" . "#dc752f")
+       ("NEXT" . "#dc752f")
+       ("THEM" . "#2d9574")
+       ("PROG" . "#4f97d7")
+       ("OKAY" . "#4f97d7")
+       ("DONT" . "#f2241f")
+       ("FAIL" . "#f2241f")
+       ("DONE" . "#86dc2f")
+       ("NOTE" . "#b1951d")
+       ("KLUDGE" . "#b1951d")
+       ("HACK" . "#b1951d")
+       ("TEMP" . "#b1951d")
+       ("FIXME" . "#dc752f")
+       ("XXX+" . "#dc752f")
+       ("\\?\\?\\?+" . "#dc752f")))
    '(scroll-bar-mode nil))
   (custom-set-faces
    ;; custom-set-faces was added by Custom.
