@@ -86,7 +86,7 @@ This function should only modify configuration layer settings."
    ;; `dotspacemacs/user-config'. To use a local version of a package, use the
    ;; `:location' property: '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
-   dotspacemacs-additional-packages '(ag visual-regexp)
+   dotspacemacs-additional-packages '(ag visual-regexp exec-path-from-shell)
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -541,11 +541,7 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
-  (when (configuration-layer/layer-used-p 'mu4e)
-    (if-let ((mu4e-context-file "~/.mu4e.el")
-             (exist (file-exists-p mu4e-context-file)))
-        (load-file mu4e-context-file)
-      (warn "%s file not found.")))
+  (exec-path-from-shell-initialize)
   (global-set-key (kbd "M-`") 'other-window)
   (when (configuration-layer/package-used-p 'magit)
     (global-set-key (kbd "M-m M-m") 'magit))
