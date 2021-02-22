@@ -604,6 +604,8 @@ This function is called at the very end of Spacemacs initialization."
        ("FIXME" . "#dc752f")
        ("XXX+" . "#dc752f")
        ("\\?\\?\\?+" . "#dc752f")))
+   '(package-selected-packages
+     '(exec-path-from-shell alert all-the-icons-gnus gnus-desktop-notify counsel-notmuch notmuch yasnippet-snippets yapfify ws-butler which-key wgrep web-beautify visual-regexp uuidgen use-package unkillable-scratch unfill undo-tree treemacs-projectile treemacs-persp treemacs-magit treemacs-icons-dired treemacs-all-the-icons tern symon string-inflection sphinx-doc spaceline-all-the-icons smex smeargle smartparens seti-theme reveal-in-osx-finder pytest pyenv-mode py-isort prettier-js poetry pippel pipenv pip-requirements persistent-scratch pcre2el password-generator overseer osx-trash osx-dictionary osx-clipboard npm-mode nodejs-repl nameless mwim move-text magit-svn magit-section magit-gitflow macrostep lorem-ipsum livid-mode live-py-mode link-hint launchctl json-navigator json-mode js2-refactor js-doc ivy-yasnippet ivy-xref ivy-hydra ivy-avy importmagic hybrid-mode hungry-delete helm-make gitignore-templates gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link fuzzy forge font-lock+ flyspell-correct-ivy flycheck-pos-tip flycheck-package flycheck-elsa flx fancy-battery eyebrowse expand-region evil-mc eval-sexp-fu emr elisp-slime-nav editorconfig dotenv-mode dired-quick-sort diminish diff-hl cython-mode csv-mode counsel-projectile company-anaconda clean-aindent-mode browse-at-remote blacken bind-map auto-yasnippet auto-dictionary auto-compile async aggressive-indent ag ac-ispell))
    '(scroll-bar-mode nil))
   (custom-set-faces
    ;; custom-set-faces was added by Custom.
