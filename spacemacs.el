@@ -72,6 +72,7 @@ This function should only modify configuration layer settings."
      (spacemacs-modeline :variables
                          spaceline-minor-modes-p nil)
      spacemacs-layouts
+     spacemacs-visual
      spell-checking
      (osx :variables
           osx-command-as 'meta
@@ -84,6 +85,7 @@ This function should only modify configuration layer settings."
      tern
      (treemacs :variables
                treemacs-use-all-the-icons-theme t)
+     unicode-fonts
      (version-control :variables
                       version-control-diff-side 'left
                       version-control-diff-tool 'diff-hl))
@@ -97,7 +99,7 @@ This function should only modify configuration layer settings."
    ;; `dotspacemacs/user-config'. To use a local version of a package, use the
    ;; `:location' property: '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
-   dotspacemacs-additional-packages '(ag visual-regexp exec-path-from-shell)
+   dotspacemacs-additional-packages '(ag visual-regexp exec-path-from-shell mu4e-marker-icons)
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -553,6 +555,8 @@ configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
   (exec-path-from-shell-initialize)
+  (setq mu4e-marker-icons-use-unicode t)
+  (mu4e-marker-icons-mode 1)
   (global-set-key (kbd "M-`") 'other-window)
   (when (configuration-layer/layer-used-p 'mu4e)
     (if-let* ((context-file "~/.mu4e.el")
