@@ -60,6 +60,7 @@ This function should only modify configuration layer settings."
            mu4e-headers-date-format "%Y-%m-%d %H:%M:%S"
            mu4e-headers-fields '((:human-date . 20)
                                  (:flags . 6)
+                                 (:size . 6)
                                  (:mailing-list . 10)
                                  (:from . 22)
                                  (:subject)))
