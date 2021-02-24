@@ -585,6 +585,7 @@ before packages are loaded."
     (global-set-key (kbd "C-c C-n") 'spacemacs/vcs-next-hunk)
     (global-set-key (kbd "C-c C-p") 'spacemacs/vcs-previous-hunk))
   (global-set-key (kbd "C-c C-f") 'find-name-dired)
+  (define-key projectile-mode-map (kbd "C-c g") 'projectile-ag)
   (add-hook 'emacs-lisp-mode-hook 'aggressive-indent-mode)
   (defun split-window-horizontally-instead ()
     "Kill any other windows and re-split such that the current window is on the top half of the frame."
