@@ -84,7 +84,6 @@ This function should only modify configuration layer settings."
      (spacemacs-modeline :variables
                          spaceline-minor-modes-p nil)
      spacemacs-layouts
-     spacemacs-visual
      spell-checking
      (osx :variables
           osx-command-as 'meta
