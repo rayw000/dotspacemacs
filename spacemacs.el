@@ -60,6 +60,17 @@ This function should only modify configuration layer settings."
            mu4e-enable-async-operations t
            mu4e-update-interval 60
            mu4e-headers-date-format "%Y-%m-%d %H:%M:%S"
+           mu4e-headers-unread-mark '("u" . "")
+           mu4e-headers-draft-mark '("D" . "")
+           mu4e-headers-flagged-mark '("F" . "")
+           mu4e-headers-new-mark '("N" . "")
+           mu4e-headers-passed-mark '("P" . "")
+           mu4e-headers-replied-mark '("R" . "")
+           mu4e-headers-seen-mark '("S" . "")
+           mu4e-headers-trashed-mark '("T" . "")
+           mu4e-headers-attach-mark '("a" . "")
+           mu4e-headers-encrypted-mark '("x" . "")
+           mu4e-headers-signed-mark '("s" . "")
            mu4e-headers-fields '((:flags . 12)
                                  (:human-date . 20)
                                  (:from . 22)
@@ -101,7 +112,7 @@ This function should only modify configuration layer settings."
    ;; `dotspacemacs/user-config'. To use a local version of a package, use the
    ;; `:location' property: '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
-   dotspacemacs-additional-packages '(ag visual-regexp exec-path-from-shell mu4e-marker-icons)
+   dotspacemacs-additional-packages '(ag visual-regexp exec-path-from-shell)
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -557,8 +568,8 @@ configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
   (exec-path-from-shell-initialize)
-  (setq mu4e-marker-icons-use-unicode t)
-  (mu4e-marker-icons-mode 1)
+  ;; link: https://github.com/stardiviner/mu4e-marker-icons/issues/1
+  (set-fontset-font t 'unicode (font-spec :family "Material Icons") nil 'prepend)
   (global-set-key (kbd "M-`") 'other-window)
   (when (configuration-layer/layer-used-p 'mu4e)
     (if-let* ((context-file "~/.mu4e.el")
@@ -632,7 +643,7 @@ This function is called at the very end of Spacemacs initialization."
        ("XXX+" . "#dc752f")
        ("\\?\\?\\?+" . "#dc752f")))
    '(package-selected-packages
-     '(mu4e-marker-icons popwin helm-gtags helm helm-core ggtags flycheck-golangci-lint dap-mode bui counsel-gtags lsp-ui lsp-treemacs lsp-python-ms lsp-pyright lsp-origami origami lsp-ivy lsp-mode spinner godoctor go-tag go-rename go-impl go-guru go-gen-test go-fill-struct go-eldoc company-go go-mode mu4e-maildirs-extension mu4e-alert log4e gntp exec-path-from-shell alert all-the-icons-gnus gnus-desktop-notify counsel-notmuch notmuch yasnippet-snippets yapfify ws-butler which-key wgrep web-beautify visual-regexp uuidgen use-package unkillable-scratch unfill undo-tree treemacs-projectile treemacs-persp treemacs-magit treemacs-icons-dired treemacs-all-the-icons tern symon string-inflection sphinx-doc spaceline-all-the-icons smex smeargle smartparens seti-theme reveal-in-osx-finder pytest pyenv-mode py-isort prettier-js poetry pippel pipenv pip-requirements persistent-scratch pcre2el password-generator overseer osx-trash osx-dictionary osx-clipboard npm-mode nodejs-repl nameless mwim move-text magit-svn magit-section magit-gitflow macrostep lorem-ipsum livid-mode live-py-mode link-hint launchctl json-navigator json-mode js2-refactor js-doc ivy-yasnippet ivy-xref ivy-hydra ivy-avy importmagic hybrid-mode hungry-delete helm-make gitignore-templates gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link fuzzy forge font-lock+ flyspell-correct-ivy flycheck-pos-tip flycheck-package flycheck-elsa flx fancy-battery eyebrowse expand-region evil-mc eval-sexp-fu emr elisp-slime-nav editorconfig dotenv-mode dired-quick-sort diminish diff-hl cython-mode csv-mode counsel-projectile company-anaconda clean-aindent-mode browse-at-remote blacken bind-map auto-yasnippet auto-dictionary auto-compile async aggressive-indent ag ac-ispell))
+     '(popwin helm-gtags helm helm-core ggtags flycheck-golangci-lint dap-mode bui counsel-gtags lsp-ui lsp-treemacs lsp-python-ms lsp-pyright lsp-origami origami lsp-ivy lsp-mode spinner godoctor go-tag go-rename go-impl go-guru go-gen-test go-fill-struct go-eldoc company-go go-mode mu4e-maildirs-extension mu4e-alert log4e gntp exec-path-from-shell alert all-the-icons-gnus gnus-desktop-notify counsel-notmuch notmuch yasnippet-snippets yapfify ws-butler which-key wgrep web-beautify visual-regexp uuidgen use-package unkillable-scratch unfill undo-tree treemacs-projectile treemacs-persp treemacs-magit treemacs-icons-dired treemacs-all-the-icons tern symon string-inflection sphinx-doc spaceline-all-the-icons smex smeargle smartparens seti-theme reveal-in-osx-finder pytest pyenv-mode py-isort prettier-js poetry pippel pipenv pip-requirements persistent-scratch pcre2el password-generator overseer osx-trash osx-dictionary osx-clipboard npm-mode nodejs-repl nameless mwim move-text magit-svn magit-section magit-gitflow macrostep lorem-ipsum livid-mode live-py-mode link-hint launchctl json-navigator json-mode js2-refactor js-doc ivy-yasnippet ivy-xref ivy-hydra ivy-avy importmagic hybrid-mode hungry-delete helm-make gitignore-templates gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link fuzzy forge font-lock+ flyspell-correct-ivy flycheck-pos-tip flycheck-package flycheck-elsa flx fancy-battery eyebrowse expand-region evil-mc eval-sexp-fu emr elisp-slime-nav editorconfig dotenv-mode dired-quick-sort diminish diff-hl cython-mode csv-mode counsel-projectile company-anaconda clean-aindent-mode browse-at-remote blacken bind-map auto-yasnippet auto-dictionary auto-compile async aggressive-indent ag ac-ispell))
    '(scroll-bar-mode nil))
   (custom-set-faces
    ;; custom-set-faces was added by Custom.
