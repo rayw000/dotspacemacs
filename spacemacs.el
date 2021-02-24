@@ -58,23 +58,23 @@ This function should only modify configuration layer settings."
            mu4e-enable-mode-line t
            mu4e-enable-notifications t
            mu4e-enable-async-operations t
-           mu4e-update-interval 60
+           mu4e-update-interval 120
            mu4e-headers-date-format "%Y-%m-%d %H:%M:%S"
-           mu4e-headers-unread-mark '("u" . "")
-           mu4e-headers-draft-mark '("D" . "")
-           mu4e-headers-flagged-mark '("F" . "")
+           mu4e-headers-unread-mark '("u" . "")
+           mu4e-headers-draft-mark '("D" . "")
+           mu4e-headers-flagged-mark '("F" . "")
            mu4e-headers-new-mark '("N" . "")
-           mu4e-headers-passed-mark '("P" . "")
-           mu4e-headers-replied-mark '("R" . "")
+           mu4e-headers-passed-mark '("P" . "")
+           mu4e-headers-replied-mark '("R" . "")
            mu4e-headers-seen-mark '("S" . "")
-           mu4e-headers-trashed-mark '("T" . "")
-           mu4e-headers-attach-mark '("a" . "")
-           mu4e-headers-encrypted-mark '("x" . "")
-           mu4e-headers-signed-mark '("s" . "")
-           mu4e-headers-fields '((:flags . 12)
-                                 (:human-date . 20)
-                                 (:from . 22)
-                                 (:subject)))
+           mu4e-headers-trashed-mark '("T" . "")
+           mu4e-headers-attach-mark '("a" . "@")
+           mu4e-headers-encrypted-mark '("x" . "")
+           mu4e-headers-signed-mark '("s" . "")
+           mu4e-headers-fields '((:human-date . 24)
+                                 (:flags . 12)
+                                 (:from . 24)
+                                 (:subject nil)))
      multiple-cursors
      ;; org
      ;; (shell :variables
@@ -658,5 +658,6 @@ This function is called at the very end of Spacemacs initialization."
    '(company-tooltip-selection ((t (:background "DeepSkyBlue4"))))
    '(fringe ((t (:inherit default))))
    '(highlight ((t (:background "chartreuse4"))))
-   '(match ((t (:inherit default :background "#151718" :foreground "red" :weight extra-bold)))))
+   '(match ((t (:inherit default :background "#151718" :foreground "red" :weight extra-bold))))
+   '(mu4e-trashed-face ((t (:inherit font-lock-comment-face :strike-through nil)))))
   )
