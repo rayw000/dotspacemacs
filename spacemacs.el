@@ -56,6 +56,8 @@ This function should only modify configuration layer settings."
      (mu4e :variables
            mu4e-installation-path "/usr/local/Cellar/mu/1.4.15/share/emacs/site-lisp"
            mu4e-enable-mode-line t
+           mu4e-enable-notifications t
+           mu4e-enable-async-operations t
            mu4e-update-interval 60
            mu4e-headers-date-format "%Y-%m-%d %H:%M:%S"
            mu4e-headers-fields '((:flags . 12)
