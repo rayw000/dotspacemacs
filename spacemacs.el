@@ -49,7 +49,8 @@ This function should only modify configuration layer settings."
           magit-diff-refine-hunk t)
      go
      ;; helm
-     ivy
+     (ivy :variables
+          ivy-extra-directories '("./"))
      javascript
      lsp
      ;; markdown
@@ -569,6 +570,15 @@ before packages are loaded."
   ;; link: https://github.com/stardiviner/mu4e-marker-icons/issues/1
   (set-fontset-font t 'unicode (font-spec :family "Material Icons") nil 'prepend)
   (global-set-key (kbd "M-`") 'other-window)
+  (when (configuration-layer/layer-used-p 'ivy)
+    (define-key ivy-minibuffer-map (kbd "<tab>") (lambda ()
+                                                   (interactive)
+                                                   (ivy-partial)
+                                                   (cond ((= 1 ivy--length)
+                                                          (ivy-alt-done))
+                                                         ((>= (+ ivy--index 1) ivy--length)
+                                                          (ivy-set-index 0))
+                                                         (t (ivy-next-line))))))
   (when (configuration-layer/layer-used-p 'mu4e)
     (if-let* ((context-file "~/.mu4e.el")
               (file-exists-p context-file))
