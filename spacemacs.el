@@ -574,7 +574,6 @@ before packages are loaded."
   (when (configuration-layer/layer-used-p 'ivy)
     (define-key ivy-minibuffer-map (kbd "<tab>") (lambda ()
                                                    (interactive)
-                                                   (ivy-partial)
                                                    (cond ((= 1 ivy--length)
                                                           (ivy-alt-done))
                                                          ((>= (+ ivy--index 1) ivy--length)
