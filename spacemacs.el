@@ -101,7 +101,8 @@ This function should only modify configuration layer settings."
      unicode-fonts
      (version-control :variables
                       version-control-diff-side 'left
-                      version-control-diff-tool 'diff-hl))
+                      version-control-diff-tool 'diff-hl)
+     yaml)
 
 
    ;; List of additional packages that will be installed without being wrapped
