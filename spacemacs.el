@@ -572,7 +572,6 @@ before packages are loaded."
   ;; link: https://github.com/stardiviner/mu4e-marker-icons/issues/1
   (set-fontset-font t 'unicode (font-spec :family "Material Icons") nil 'prepend)
   (global-set-key (kbd "M-`") 'other-window)
-  (global-set-key (kbd "TAB") 'company-complete-common)
   (when (configuration-layer/layer-used-p 'ivy)
     (define-key ivy-minibuffer-map (kbd "<tab>") (lambda ()
                                                    (interactive)
