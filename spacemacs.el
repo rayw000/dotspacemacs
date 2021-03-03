@@ -61,6 +61,7 @@ This function should only modify configuration layer settings."
            mu4e-enable-notifications t
            mu4e-enable-async-operations t
            mu4e-update-interval 120
+           mu4e-org-compose-support t
            mu4e-headers-date-format "%Y-%m-%d %H:%M:%S"
            mu4e-headers-unread-mark '("u" . "")
            mu4e-headers-draft-mark '("D" . "")
