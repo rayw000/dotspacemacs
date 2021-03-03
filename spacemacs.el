@@ -50,6 +50,7 @@ This function should only modify configuration layer settings."
           magit-diff-refine-hunk t)
      go
      ;; helm
+     (html :variables)
      (ivy :variables
           ivy-extra-directories '("./"))
      (javascript :variables
