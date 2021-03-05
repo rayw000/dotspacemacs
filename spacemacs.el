@@ -54,7 +54,9 @@ This function should only modify configuration layer settings."
      (ivy :variables
           ivy-extra-directories '("./"))
      (javascript :variables
-                 js-indent-level 2)
+                 js-indent-level 2
+                 js2-strict-missing-semi-warning nil
+                 js2-missing-semi-one-line-override t)
      lsp
      (markdown :variables
                markdown-live-preview-engine 'vmd)
