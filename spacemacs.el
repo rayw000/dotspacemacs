@@ -580,7 +580,6 @@ Put your configuration code here, except for variables that should be set
 before packages are loaded."
   (exec-path-from-shell-initialize)
   ;; link: https://github.com/stardiviner/mu4e-marker-icons/issues/1
-  (set-fontset-font t 'unicode (font-spec :family "Material Icons") nil 'prepend)
   (global-set-key (kbd "M-`") 'other-window)
   (when (configuration-layer/layer-used-p 'ivy)
     (define-key ivy-minibuffer-map (kbd "<tab>") (lambda ()
