@@ -57,7 +57,8 @@ This function should only modify configuration layer settings."
                  js-indent-level 2
                  js2-strict-missing-semi-warning nil
                  js2-missing-semi-one-line-override t)
-     lsp
+     (lsp :variables
+          lsp-headerline-arrow ">")
      (markdown :variables
                markdown-live-preview-engine 'vmd)
      (mu4e :variables
