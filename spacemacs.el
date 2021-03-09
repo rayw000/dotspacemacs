@@ -83,6 +83,7 @@ This function should only modify configuration layer settings."
            mu4e-headers-encrypted-mark '("x" . "")
            mu4e-headers-signed-mark '("s" . "")
            mu4e-headers-fields '((:human-date . 24)
+                                 (:from . 24)
                                  (:flags . 12)
                                  (:subject)))
      multiple-cursors
