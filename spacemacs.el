@@ -569,7 +569,10 @@ configuration.
 It is mostly for variables that should be set before packages are loaded.
 If you are unsure, try setting them in `dotspacemacs/user-config' first."
   (setq custom-file ""
-        scroll-bar-mode nil))
+        scroll-bar-mode nil
+        ag-highlight-search t)
+  (custom-set-faces
+   '(match ((t (:inherit default :background "#151718" :foreground "red" :weight extra-bold))))))
 
 (defun dotspacemacs/user-load ()
   "Library to load while dumping.
