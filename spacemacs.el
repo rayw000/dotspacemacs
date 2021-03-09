@@ -58,7 +58,8 @@ This function should only modify configuration layer settings."
                  js2-strict-missing-semi-warning nil
                  js2-missing-semi-one-line-override t)
      (lsp :variables
-          lsp-headerline-arrow ">")
+          lsp-headerline-arrow ">"
+          lsp-treemacs-theme "Iconless")
      (markdown :variables
                markdown-live-preview-engine 'vmd)
      (mu4e :variables
@@ -565,7 +566,8 @@ This function is called immediately after `dotspacemacs/init', before layer
 configuration.
 It is mostly for variables that should be set before packages are loaded.
 If you are unsure, try setting them in `dotspacemacs/user-config' first."
-  )
+  (setq custom-file ""
+        scroll-bar-mode nil))
 
 (defun dotspacemacs/user-load ()
   "Library to load while dumping.
@@ -629,57 +631,3 @@ before packages are loaded."
   (global-set-key (kbd "C-x _") 'split-window-vertically-instead)
   (when (fboundp 'vr/replace)
     (global-set-key (kbd "C-c C-/") 'vr/replace)))
-
-;; Do not write anything past this comment. This is where Emacs will
-;; auto-generate custom variable definitions.
-(defun dotspacemacs/emacs-custom-settings ()
-  "Emacs custom settings.
-This is an auto-generated function, do not modify its content directly, use
-Emacs customize menu instead.
-This function is called at the very end of Spacemacs initialization."
-  (custom-set-variables
-   ;; custom-set-variables was added by Custom.
-   ;; If you edit it by hand, you could mess it up, so be careful.
-   ;; Your init file should contain only one such instance.
-   ;; If there is more than one, they won't work right.
-   '(ag-highlight-search t)
-   '(ansi-color-names-vector
-     ["#0a0814" "#f2241f" "#67b11d" "#b1951d" "#4f97d7" "#a31db1" "#28def0" "#b2b2b2"])
-   '(company-tooltip-limit 20)
-   '(evil-want-Y-yank-to-eol nil)
-   '(hl-todo-keyword-faces
-     '(("TODO" . "#dc752f")
-       ("NEXT" . "#dc752f")
-       ("THEM" . "#2d9574")
-       ("PROG" . "#4f97d7")
-       ("OKAY" . "#4f97d7")
-       ("DONT" . "#f2241f")
-       ("FAIL" . "#f2241f")
-       ("DONE" . "#86dc2f")
-       ("NOTE" . "#b1951d")
-       ("KLUDGE" . "#b1951d")
-       ("HACK" . "#b1951d")
-       ("TEMP" . "#b1951d")
-       ("FIXME" . "#dc752f")
-       ("XXX+" . "#dc752f")
-       ("\\?\\?\\?+" . "#dc752f")))
-   '(lsp-treemacs-theme "Iconless")
-   '(package-selected-packages
-     '(w3m xterm-color vterm terminal-here shell-pop multi-term eshell-z eshell-prompt-extras esh-help web-mode tagedit slim-mode scss-mode sass-mode pug-mode impatient-mode helm-css-scss haml-mode evil-matchit emmet-mode counsel-css company-web web-completion-data add-node-modules-path vmd-mode mmm-mode markdown-toc gh-md dockerfile-mode docker tablist docker-tramp yaml-mode nginx-mode magit-section unicode-fonts ucs-utils shut-up persistent-soft pcache multi-line hl-todo font-utils popwin helm-gtags helm helm-core ggtags flycheck-golangci-lint dap-mode bui counsel-gtags lsp-ui lsp-treemacs lsp-python-ms lsp-pyright lsp-origami origami lsp-ivy lsp-mode spinner godoctor go-tag go-rename go-impl go-guru go-gen-test go-fill-struct go-eldoc company-go go-mode mu4e-maildirs-extension mu4e-alert log4e gntp exec-path-from-shell alert all-the-icons-gnus gnus-desktop-notify counsel-notmuch notmuch yasnippet-snippets yapfify ws-butler which-key wgrep web-beautify visual-regexp uuidgen use-package unkillable-scratch unfill undo-tree treemacs-projectile treemacs-persp treemacs-magit treemacs-icons-dired treemacs-all-the-icons tern symon string-inflection sphinx-doc spaceline-all-the-icons smex smeargle smartparens seti-theme reveal-in-osx-finder pytest pyenv-mode py-isort prettier-js poetry pippel pipenv pip-requirements persistent-scratch pcre2el password-generator overseer osx-trash osx-dictionary osx-clipboard npm-mode nodejs-repl nameless mwim move-text magit-svn magit-gitflow macrostep lorem-ipsum livid-mode live-py-mode link-hint launchctl json-navigator json-mode js2-refactor js-doc ivy-yasnippet ivy-xref ivy-hydra ivy-avy importmagic hybrid-mode hungry-delete helm-make gitignore-templates gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link fuzzy forge font-lock+ flyspell-correct-ivy flycheck-pos-tip flycheck-package flycheck-elsa flx fancy-battery eyebrowse expand-region evil-mc eval-sexp-fu emr elisp-slime-nav editorconfig dotenv-mode dired-quick-sort diminish diff-hl cython-mode csv-mode counsel-projectile company-anaconda clean-aindent-mode browse-at-remote blacken bind-map auto-yasnippet auto-dictionary auto-compile async aggressive-indent ag ac-ispell))
-   '(scroll-bar-mode nil))
-  (custom-set-faces
-   ;; custom-set-faces was added by Custom.
-   ;; If you edit it by hand, you could mess it up, so be careful.
-   ;; Your init file should contain only one such instance.
-   ;; If there is more than one, they won't work right.
-   '(company-scrollbar-bg ((t (:inherit company-tooltip))))
-   '(company-scrollbar-fg ((t (:background "RoyalBlue1"))))
-   '(company-tooltip ((t (:background "#101553" :foreground "gray85"))))
-   '(company-tooltip-annotation ((t (:foreground "chartreuse1"))))
-   '(company-tooltip-common ((t (:foreground "orange1"))))
-   '(company-tooltip-selection ((t (:background "DeepSkyBlue4"))))
-   '(fringe ((t (:inherit default))))
-   '(highlight ((t (:background "chartreuse4"))))
-   '(match ((t (:inherit default :background "#151718" :foreground "red" :weight extra-bold))))
-   '(mu4e-trashed-face ((t (:inherit font-lock-comment-face :strike-through nil)))))
-  )
