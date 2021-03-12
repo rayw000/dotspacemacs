@@ -110,7 +110,6 @@ This function should only modify configuration layer settings."
           osx-swap-option-and-command nil)
      syntax-checking
      tern
-     themes-megapack
      (treemacs :variables
                treemacs-use-all-the-icons-theme t)
      unicode-fonts
