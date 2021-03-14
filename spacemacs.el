@@ -568,9 +568,12 @@ This function is called immediately after `dotspacemacs/init', before layer
 configuration.
 It is mostly for variables that should be set before packages are loaded.
 If you are unsure, try setting them in `dotspacemacs/user-config' first."
-  (setq custom-file ""
-        scroll-bar-mode nil
-        ag-highlight-search t)
+  (when (fboundp 'native-compile)
+    (setq comp-deferred-compilation-deny-list '("powerline"))
+    (setq package-native-compile t))
+  (setq ;; custom-file (concat user-emacs-directory ".cache/")
+   scroll-bar-mode nil
+   ag-highlight-search t)
   (custom-set-faces
    '(match ((t (:inherit default :background "#151718" :foreground "red" :weight extra-bold))))))
 
@@ -636,3 +639,23 @@ before packages are loaded."
   (global-set-key (kbd "C-x _") 'split-window-vertically-instead)
   (when (fboundp 'vr/replace)
     (global-set-key (kbd "C-c C-/") 'vr/replace)))
+(defun dotspacemacs/emacs-custom-settings ()
+  "Emacs custom settings.
+This is an auto-generated function, do not modify its content directly, use
+Emacs customize menu instead.
+This function is called at the very end of Spacemacs initialization."
+  (custom-set-variables
+   ;; custom-set-variables was added by Custom.
+   ;; If you edit it by hand, you could mess it up, so be careful.
+   ;; Your init file should contain only one such instance.
+   ;; If there is more than one, they won't work right.
+   '(evil-want-Y-yank-to-eol nil)
+   '(package-selected-packages
+     '(helpful doom-modeline shrink-path evil-matchit drupal-mode dap-mode bui counsel-gtags company-phpactor phpactor composer php-runtime company-php ac-php-core xcscope php-mode yasnippet-snippets yapfify yaml-mode xterm-color ws-butler which-key wgrep web-mode web-beautify w3m vterm vmd-mode visual-regexp uuidgen use-package unkillable-scratch unicode-fonts unfill undo-tree treemacs-projectile treemacs-persp treemacs-magit treemacs-icons-dired treemacs-all-the-icons toc-org tern terminal-here tagedit symon string-inflection string-edit sphinx-doc spaceline-all-the-icons smex smeargle smartparens slim-mode shell-pop seti-theme scss-mode sass-mode reveal-in-osx-finder pytest pyenv-mode py-isort pug-mode prettier-js poetry pippel pipenv pip-requirements persistent-scratch pcre2el password-generator overseer osx-trash osx-dictionary osx-clipboard orgit org-superstar org-rich-yank org-present org-pomodoro org-mime org-download org-cliplink org-brain npm-mode nodejs-repl nginx-mode nameless mwim multi-term multi-line mu4e-maildirs-extension mu4e-alert move-text mmm-mode markdown-toc magit-svn magit-section magit-gitflow macrostep lsp-ui lsp-treemacs lsp-python-ms lsp-pyright lsp-origami lsp-ivy lorem-ipsum livid-mode live-py-mode link-hint launchctl json-navigator js2-refactor js-doc ivy-yasnippet ivy-xref ivy-hydra ivy-avy importmagic impatient-mode hybrid-mode hungry-delete helm-make godoctor go-tag go-rename go-impl go-guru go-gen-test go-fill-struct go-eldoc gnuplot gitignore-templates gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy forge font-lock+ flyspell-correct-ivy flycheck-pos-tip flycheck-package flycheck-elsa flx fancy-battery eyebrowse expand-region exec-path-from-shell evil-org evil-mc eval-sexp-fu eshell-z eshell-prompt-extras esh-help emr emmet-mode elisp-slime-nav editorconfig dotenv-mode dockerfile-mode docker dired-quick-sort diminish diff-hl cython-mode csv-mode counsel-projectile counsel-css company-web company-go company-anaconda clean-aindent-mode browse-at-remote blacken bind-map auto-yasnippet auto-dictionary auto-compile aggressive-indent ag ac-ispell)))
+  (custom-set-faces
+   ;; custom-set-faces was added by Custom.
+   ;; If you edit it by hand, you could mess it up, so be careful.
+   ;; Your init file should contain only one such instance.
+   ;; If there is more than one, they won't work right.
+   '(match ((t (:inherit default :background "#151718" :foreground "red" :weight extra-bold)))))
+  )
