@@ -87,7 +87,7 @@ This function should only modify configuration layer settings."
                                  (:from . 24)
                                  (:flags . 12)
                                  (:subject)))
-     multiple-cursors
+     ;; multiple-cursors
      nginx
      org
      (shell :variables
