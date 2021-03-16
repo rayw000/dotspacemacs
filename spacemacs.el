@@ -110,7 +110,7 @@ This function should only modify configuration layer settings."
           osx-right-control-as 'left
           osx-swap-option-and-command nil)
      syntax-checking
-     tern
+     ;; tern
      (treemacs :variables
                treemacs-use-all-the-icons-theme t)
      unicode-fonts
