@@ -568,14 +568,13 @@ This function is called immediately after `dotspacemacs/init', before layer
 configuration.
 It is mostly for variables that should be set before packages are loaded.
 If you are unsure, try setting them in `dotspacemacs/user-config' first."
+  (setq
+   scroll-bar-mode nil
+   ag-highlight-search t
+   default-directory (expand-file-name "~/"))
   (when (fboundp 'native-compile)
     (setq comp-deferred-compilation-deny-list '("powerline"))
-    (setq package-native-compile t))
-  (setq ;; custom-file (concat user-emacs-directory ".cache/")
-   scroll-bar-mode nil
-   ag-highlight-search t)
-  (custom-set-faces
-   '(match ((t (:inherit default :background "#151718" :foreground "red" :weight extra-bold))))))
+    (setq package-native-compile t)))
 
 (defun dotspacemacs/user-load ()
   "Library to load while dumping.
