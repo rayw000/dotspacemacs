@@ -64,8 +64,31 @@ This function should only modify configuration layer settings."
      (markdown :variables
                markdown-live-preview-engine 'vmd)
      ;; multiple-cursors
+     (mu4e :variables
+           mu4e-installation-path "/usr/local/Cellar/mu/1.4.15/share/emacs/site-lisp"
+           mu4e-enable-mode-line t
+           mu4e-enable-notifications t
+           mu4e-enable-async-operations t
+           mu4e-update-interval 120
+           mu4e-autorun-background-at-startup t
+           mu4e-org-compose-support t
+           mu4e-headers-date-format "%Y-%m-%d %H:%M:%S"
+           mu4e-headers-unread-mark '("u" . "")
+           mu4e-headers-draft-mark '("D" . "")
+           mu4e-headers-flagged-mark '("F" . "")
+           mu4e-headers-new-mark '("N" . "")
+           mu4e-headers-passed-mark '("P" . "")
+           mu4e-headers-replied-mark '("R" . "")
+           mu4e-headers-seen-mark '("S" . "")
+           mu4e-headers-trashed-mark '("T" . "")
+           mu4e-headers-attach-mark '("a" . "@")
+           mu4e-headers-encrypted-mark '("x" . "")
+           mu4e-headers-signed-mark '("s" . "")
+           mu4e-headers-fields '((:human-date . 24)
+                                 (:from . 24)
+                                 (:flags . 12)
+                                 (:subject)))
      nginx
-     (notmuch)
      org
      (shell :variables
             shell-default-shell 'vterm
