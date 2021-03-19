@@ -606,7 +606,8 @@ before packages are loaded."
               (file-exists-p context-file))
         (progn
           (require 'mu4e)
-          (load-file context-file))))
+          (load-file context-file)
+          (add-hook 'mu4e-compose-mode-hook 'turn-off-auto-fill))))
   (when (configuration-layer/layer-used-p 'gnus)
     (if-let* ((context-file "~/.gnus.el")
               (file-exists-p context-file))
