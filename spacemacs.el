@@ -69,6 +69,10 @@ This function should only modify configuration layer settings."
            mu4e-enable-mode-line t
            mu4e-enable-notifications t
            mu4e-enable-async-operations t
+           mu4e-sent-folder   "/sent"
+           mu4e-drafts-folder "/drafts"
+           mu4e-trash-folder  "/trash"
+           mu4e-refile-folder "/archive"
            mu4e-update-interval 120
            mu4e-autorun-background-at-startup t
            mu4e-org-compose-support t
