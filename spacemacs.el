@@ -40,7 +40,7 @@ This function should only modify configuration layer settings."
      ;; ----------------------------------------------------------------
      (auto-completion :variables
                       company-tooltip-limit 20
-                      company-idle-delay .1
+                      company-idle-delay 0
                       tab-always-indent 'complete)
      better-defaults
      csv
