@@ -65,7 +65,7 @@ This function should only modify configuration layer settings."
                markdown-live-preview-engine 'vmd)
      ;; multiple-cursors
      (mu4e :variables
-           mu4e-installation-path "/usr/local/share/emacs/site-lisp"
+           mu4e-installation-path (expand-file-name "~/repo/open-source/mu/mu4e")
            mu4e-enable-mode-line t
            mu4e-enable-notifications t
            mu4e-enable-async-operations t
@@ -87,7 +87,7 @@ This function should only modify configuration layer settings."
            mu4e-headers-new-mark '("N" . "")
            mu4e-headers-passed-mark '("P" . "")
            mu4e-headers-replied-mark '("R" . "")
-           mu4e-headers-seen-mark '("S" . "")
+           mu4e-headers-seen-mark '("" . "")
            mu4e-headers-trashed-mark '("T" . "")
            mu4e-headers-attach-mark '("a" . "@")
            mu4e-headers-encrypted-mark '("x" . "")
@@ -95,7 +95,8 @@ This function should only modify configuration layer settings."
            mu4e-headers-fields '((:human-date . 24)
                                  (:from . 24)
                                  (:flags . 12)
-                                 (:subject)))
+                                 (:subject))
+           mu4e-use-fancy-chars nil)
      nginx
      org
      (shell :variables
