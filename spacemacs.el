@@ -43,7 +43,14 @@ This function should only modify configuration layer settings."
                       company-idle-delay 0
                       tab-always-indent 'complete)
      better-defaults
+     (c-c++ :variables
+            c-c++-backend 'lsp-ccls
+            c-c++-adopt-subprojects t
+            c-c++-lsp-enable-semantic-highlight 'rainbow
+            c-c++-dap-adapters '(dap-lldb dap-cpptools))
      csv
+     (chinese :variables
+              chinese-enable-avy-pinyin nil)
      docker
      emacs-lisp
      (git :variables
@@ -60,12 +67,13 @@ This function should only modify configuration layer settings."
                  js2-missing-semi-one-line-override t)
      (lsp :variables
           lsp-headerline-arrow ">"
-          lsp-treemacs-theme "Iconless")
+          lsp-treemacs-theme "Iconless"
+          lsp-file-watch-threshold 256)
      (markdown :variables
                markdown-live-preview-engine 'vmd)
      ;; multiple-cursors
      (mu4e :variables
-           mu4e-installation-path (expand-file-name "~/repo/open-source/mu/mu4e")
+           mu4e-installation-path (expand-file-name "~/repo/open-source/mu/dist/share/emacs/site-lisp/mu4e")
            mu4e-enable-mode-line t
            mu4e-enable-notifications t
            mu4e-enable-async-operations t
@@ -95,17 +103,17 @@ This function should only modify configuration layer settings."
            mu4e-headers-fields '((:human-date . 24)
                                  (:from . 24)
                                  (:flags . 12)
-                                 (:subject))
-           mu4e-use-fancy-chars nil)
+                                 (:subject)))
      nginx
      org
+     protobuf
      (shell :variables
             shell-default-shell 'vterm
             shell-default-height 30
             shell-default-position 'bottom
             shell-enable-smart-eshell t)
      (python :variables
-             python-shell-interpreter "python3")
+             python-indent-offset 4)
      spacemacs-editing
      (spacemacs-modeline :variables
                          spaceline-minor-modes-p nil)
@@ -122,6 +130,7 @@ This function should only modify configuration layer settings."
      ;; tern
      (treemacs :variables
                treemacs-use-all-the-icons-theme t)
+     typescript
      unicode-fonts
      (version-control :variables
                       version-control-diff-side 'left
@@ -137,7 +146,7 @@ This function should only modify configuration layer settings."
    ;; `dotspacemacs/user-config'. To use a local version of a package, use the
    ;; `:location' property: '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
-   dotspacemacs-additional-packages '(ag visual-regexp exec-path-from-shell w3m)
+   dotspacemacs-additional-packages '(ag visual-regexp w3m)
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -582,9 +591,9 @@ It is mostly for variables that should be set before packages are loaded.
 If you are unsure, try setting them in `dotspacemacs/user-config' first."
   ;; Set CJK font size to adopt English font size, which partially resolve align problem
   ;; Refer to https://coldnew.github.io/d5011be2/
-  (dolist (charset '(kana han symbol cjk-misc bopomofo))
-    (set-fontset-font (frame-parameter nil 'font) charset
-                      (font-spec :family "PingFang SC" :size 14)))
+  ;; (dolist (charset '(kana han symbol cjk-misc bopomofo))
+  ;;   (set-fontset-font (frame-parameter nil 'font) charset
+  ;;                     (font-spec :family "PingFang SC" :size 14)))
   (setq
    scroll-bar-mode nil
    ag-highlight-search t
@@ -592,7 +601,9 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
    source-directory (expand-file-name "~/repo/open-source/emacs"))
   (when (fboundp 'native-compile)
     (setq comp-deferred-compilation-deny-list '("powerline"))
-    (setq package-native-compile t)))
+    (setq package-native-compile t))
+  (when (configuration-layer/layer-used-p 'chinese)
+    (spacemacs//set-monospaced-font "Monaco" "PingFang SC" 12 14)))
 
 (defun dotspacemacs/user-load ()
   "Library to load while dumping.
@@ -607,8 +618,6 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
-  (exec-path-from-shell-initialize)
-  ;; link: https://github.com/stardiviner/mu4e-marker-icons/issues/1
   (global-set-key (kbd "M-`") 'other-window)
   (when (configuration-layer/layer-used-p 'ivy)
     (define-key ivy-minibuffer-map (kbd "<tab>") (lambda ()
@@ -631,12 +640,13 @@ before packages are loaded."
         (load-file context-file)))
   (when (configuration-layer/package-used-p 'magit)
     (global-set-key (kbd "M-m M-m") 'magit))
-  (when (configuration-layer/layer-used-p'version-control)
+  (when (configuration-layer/layer-used-p 'version-control)
     (global-set-key (kbd "C-c C-n") 'spacemacs/vcs-next-hunk)
     (global-set-key (kbd "C-c C-p") 'spacemacs/vcs-previous-hunk))
   (global-set-key (kbd "C-c C-f") 'find-name-dired)
   (define-key projectile-mode-map (kbd "C-c g") 'projectile-ag)
   (add-hook 'emacs-lisp-mode-hook 'aggressive-indent-mode)
+
   (defun split-window-horizontally-instead ()
     "Kill any other windows and re-split such that the current window is on the top half of the frame."
     (interactive)
@@ -657,6 +667,7 @@ before packages are loaded."
   (global-set-key (kbd "C-x _") 'split-window-vertically-instead)
   (when (fboundp 'vr/replace)
     (global-set-key (kbd "C-c C-/") 'vr/replace)))
+
 (defun dotspacemacs/emacs-custom-settings ()
   "Emacs custom settings.
 This is an auto-generated function, do not modify its content directly, use
@@ -668,18 +679,21 @@ This function is called at the very end of Spacemacs initialization."
    ;; Your init file should contain only one such instance.
    ;; If there is more than one, they won't work right.
    '(evil-want-Y-yank-to-eol nil)
-   '(org-todo-keywords '((sequence "TODO" "WAITING" "CANCEL" "DONE")))
    '(org-export-with-planning t)
-   '(org-todo-keyword-faces '(("TODO" . "royalblue")
-                              ("WAITING" . "magenta")
-                              ("CANCEL" . "red")
-                              ("DONE" . "chartreuse")))
+   '(org-todo-keyword-faces
+     '(("TODO" . "royalblue")
+       ("WAITING" . "magenta")
+       ("CANCEL" . "red")
+       ("DONE" . "chartreuse")))
+   '(org-todo-keywords '((sequence "TODO" "WAITING" "CANCEL" "DONE")))
    '(package-selected-packages
-     '(orgit-forge drag-stuff define-it google-translate helpful doom-modeline shrink-path evil-matchit drupal-mode dap-mode bui counsel-gtags company-phpactor phpactor composer php-runtime company-php ac-php-core xcscope php-mode yasnippet-snippets yapfify yaml-mode xterm-color ws-butler which-key wgrep web-mode web-beautify w3m vterm vmd-mode visual-regexp uuidgen use-package unkillable-scratch unicode-fonts unfill undo-tree treemacs-projectile treemacs-persp treemacs-magit treemacs-icons-dired treemacs-all-the-icons toc-org tern terminal-here tagedit symon string-inflection string-edit sphinx-doc spaceline-all-the-icons smex smeargle smartparens slim-mode shell-pop seti-theme scss-mode sass-mode reveal-in-osx-finder pytest pyenv-mode py-isort pug-mode prettier-js poetry pippel pipenv pip-requirements persistent-scratch pcre2el password-generator overseer osx-trash osx-dictionary osx-clipboard orgit org-superstar org-rich-yank org-present org-pomodoro org-mime org-download org-cliplink org-brain npm-mode nodejs-repl nginx-mode nameless mwim multi-term multi-line mu4e-maildirs-extension mu4e-alert move-text mmm-mode markdown-toc magit-svn magit-section magit-gitflow macrostep lsp-ui lsp-treemacs lsp-python-ms lsp-pyright lsp-origami lsp-ivy lorem-ipsum livid-mode live-py-mode link-hint launchctl json-navigator js2-refactor js-doc ivy-yasnippet ivy-xref ivy-hydra ivy-avy importmagic impatient-mode hybrid-mode hungry-delete helm-make godoctor go-tag go-rename go-impl go-guru go-gen-test go-fill-struct go-eldoc gnuplot gitignore-templates gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy forge font-lock+ flyspell-correct-ivy flycheck-pos-tip flycheck-package flycheck-elsa flx fancy-battery eyebrowse expand-region exec-path-from-shell evil-org evil-mc eval-sexp-fu eshell-z eshell-prompt-extras esh-help emr emmet-mode elisp-slime-nav editorconfig dotenv-mode dockerfile-mode docker dired-quick-sort diminish diff-hl cython-mode csv-mode counsel-projectile counsel-css company-web company-go company-anaconda clean-aindent-mode browse-at-remote blacken bind-map auto-yasnippet auto-dictionary auto-compile aggressive-indent ag ac-ispell)))
+     '(pyim xr pangu-spacing find-by-pinyin-dired chinese-conv ace-pinyin pinyinlib tern origami lsp-mode spinner flycheck-pos-tip pos-tip import-js 2048-game mu4e-maildirs-extension mu4e-alert dap-mode bui yasnippet-snippets yapfify yaml-mode xterm-color ws-butler which-key wgrep web-mode web-beautify w3m vterm vmd-mode visual-regexp uuidgen use-package unkillable-scratch unicode-fonts unfill undo-tree treemacs-projectile treemacs-persp treemacs-magit treemacs-icons-dired treemacs-all-the-icons toc-org tide terminal-here tagedit symon string-inflection string-edit sphinx-doc spaceline-all-the-icons smex smeargle smartparens slim-mode shell-pop seti-theme scss-mode sass-mode reveal-in-osx-finder quickrun pytest pyenv-mode py-isort pug-mode protobuf-mode prettier-js poetry pippel pipenv pip-requirements persistent-scratch pcre2el password-generator overseer osx-trash osx-dictionary osx-clipboard orgit-forge org-superstar org-rich-yank org-present org-pomodoro org-mime org-download org-contrib org-cliplink npm-mode nose nodejs-repl nginx-mode nameless mwim multi-term multi-line mmm-mode markdown-toc macrostep lsp-ui lsp-treemacs lsp-python-ms lsp-pyright lsp-origami lsp-ivy lorem-ipsum livid-mode live-py-mode link-hint launchctl json-navigator js2-refactor js-doc ivy-yasnippet ivy-xref ivy-hydra ivy-avy importmagic impatient-mode hybrid-mode hungry-delete helpful helm-make godoctor go-tag go-rename go-impl go-guru go-gen-test go-fill-struct go-eldoc gnuplot gitignore-templates gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy font-lock+ flx fancy-battery eyebrowse expand-region evil-org eval-sexp-fu eshell-z eshell-prompt-extras esh-help emr emmet-mode elisp-slime-nav editorconfig drag-stuff dotenv-mode dockerfile-mode docker dired-quick-sort diminish diff-hl cython-mode csv-mode counsel-projectile counsel-css company-web company-go company-anaconda clean-aindent-mode browse-at-remote blacken bind-map auto-yasnippet auto-compile aggressive-indent ag ac-ispell)))
   (custom-set-faces
    ;; custom-set-faces was added by Custom.
    ;; If you edit it by hand, you could mess it up, so be careful.
    ;; Your init file should contain only one such instance.
    ;; If there is more than one, they won't work right.
-   '(match ((t (:inherit default :background "#151718" :foreground "red" :weight extra-bold)))))
+   '(lsp-details-face ((t (:inherit shadow :foreground "gray31" :height 0.8))))
+   '(match ((t (:inherit default :background "#151718" :foreground "red" :weight extra-bold))))
+   '(shadow ((t (:foreground "grey30")))))
   )
