@@ -118,7 +118,8 @@ This function should only modify configuration layer settings."
      (spacemacs-modeline :variables
                          spaceline-minor-modes-p nil)
      spacemacs-layouts
-     spell-checking
+     (spell-checking :variables
+                     spell-checking-enable-by-default nil)
      (osx :variables
           osx-command-as 'meta
           osx-function-as nil
@@ -126,7 +127,8 @@ This function should only modify configuration layer settings."
           osx-right-option-as 'left
           osx-right-control-as 'left
           osx-swap-option-and-command nil)
-     syntax-checking
+     (syntax-checking :variables
+                      syntax-checking-enable-by-default nil)
      ;; tern
      (treemacs :variables
                treemacs-use-all-the-icons-theme t)
