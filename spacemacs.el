@@ -103,7 +103,8 @@ This function should only modify configuration layer settings."
            mu4e-headers-fields '((:human-date . 24)
                                  (:from . 24)
                                  (:flags . 12)
-                                 (:subject)))
+                                 (:subject))
+           mu4e-use-fancy-chars nil)
      nginx
      org
      protobuf
