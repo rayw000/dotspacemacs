@@ -65,10 +65,10 @@ This function should only modify configuration layer settings."
                  js-indent-level 2
                  js2-strict-missing-semi-warning nil
                  js2-missing-semi-one-line-override t)
-     (lsp :variables
-          lsp-headerline-arrow ">"
-          lsp-treemacs-theme "Iconless"
-          lsp-file-watch-threshold 256)
+     ;; (lsp :variables
+     ;;      lsp-headerline-arrow ">"
+     ;;      lsp-treemacs-theme "Iconless"
+     ;;      lsp-file-watch-threshold 256)
      (markdown :variables
                markdown-live-preview-engine 'vmd)
      ;; multiple-cursors
@@ -584,7 +584,7 @@ This function defines the environment variables for your Emacs session. By
 default it calls `spacemacs/load-spacemacs-env' which loads the environment
 variables declared in `~/.spacemacs.env' or `~/.spacemacs.d/.spacemacs.env'.
 See the header of this file for more information."
-  (spacemacs/load-spacemacs-env t))
+  (spacemacs/load-spacemacs-env))
 
 (defun dotspacemacs/user-init ()
   "Initialization for user code:
@@ -689,8 +689,7 @@ This function is called at the very end of Spacemacs initialization."
        ("CANCEL" . "red")
        ("DONE" . "chartreuse")))
    '(org-todo-keywords '((sequence "TODO" "WAITING" "CANCEL" "DONE")))
-   '(package-selected-packages
-     '(use-package unkillable-scratch unicode-fonts unfill undo-tree treemacs-projectile treemacs-persp treemacs-magit treemacs-icons-dired treemacs-all-the-icons toc-org tide terminal-here tagedit symon string-inflection string-edit sphinx-doc spaceline-all-the-icons smex smeargle smartparens slim-mode shell-pop seti-theme scss-mode sass-mode reveal-in-osx-finder quickrun pytest pyim pyenv-mode py-isort pug-mode protobuf-mode prettier-js poetry pippel pipenv pip-requirements persistent-scratch pcre2el password-generator pangu-spacing overseer osx-trash osx-dictionary osx-clipboard orgit-forge org-superstar org-rich-yank org-present org-pomodoro org-mime org-download org-contrib org-cliplink npm-mode nose nodejs-repl nginx-mode nameless mwim multi-term multi-line mu4e-maildirs-extension mu4e-alert mmm-mode markdown-toc macrostep lsp-ui lsp-python-ms lsp-pyright lsp-origami lsp-ivy lorem-ipsum livid-mode live-py-mode link-hint launchctl json-navigator js2-refactor js-doc ivy-yasnippet ivy-xref ivy-rtags ivy-hydra ivy-avy importmagic impatient-mode hybrid-mode hungry-delete helpful helm-make google-c-style godoctor go-tag go-rename go-impl go-guru go-gen-test go-fill-struct go-eldoc gnuplot gitignore-templates gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy font-lock+ flyspell-correct-ivy flycheck-ycmd flycheck-rtags flycheck-pos-tip flycheck-package flycheck-elsa flx find-by-pinyin-dired fancy-battery eyebrowse expand-region evil-org eval-sexp-fu eshell-z eshell-prompt-extras esh-help emr emmet-mode elisp-slime-nav editorconfig drag-stuff dotenv-mode dockerfile-mode docker disaster dired-quick-sort diminish diff-hl dap-mode cython-mode csv-mode cpp-auto-include counsel-projectile counsel-css company-ycmd company-web company-rtags company-go company-c-headers company-anaconda clean-aindent-mode chinese-conv ccls browse-at-remote blacken bind-map auto-yasnippet auto-dictionary auto-compile aggressive-indent ag ace-pinyin ac-ispell)))
+   '(package-selected-packages))
   (custom-set-faces
    ;; custom-set-faces was added by Custom.
    ;; If you edit it by hand, you could mess it up, so be careful.
