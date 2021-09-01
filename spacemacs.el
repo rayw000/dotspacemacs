@@ -65,10 +65,10 @@ This function should only modify configuration layer settings."
                  js-indent-level 2
                  js2-strict-missing-semi-warning nil
                  js2-missing-semi-one-line-override t)
-     ;; (lsp :variables
-     ;;      lsp-headerline-arrow ">"
-     ;;      lsp-treemacs-theme "Iconless"
-     ;;      lsp-file-watch-threshold 256)
+     (lsp :variables
+          lsp-headerline-arrow ">"
+          lsp-treemacs-theme "Iconless"
+          lsp-file-watch-threshold 256)
      (markdown :variables
                markdown-live-preview-engine 'vmd)
      ;; multiple-cursors
