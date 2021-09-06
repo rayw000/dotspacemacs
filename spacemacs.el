@@ -49,8 +49,8 @@ This function should only modify configuration layer settings."
             c-c++-lsp-enable-semantic-highlight 'rainbow
             c-c++-dap-adapters '(dap-lldb dap-cpptools))
      csv
-     (chinese :variables
-              chinese-enable-avy-pinyin nil)
+     ;; (chinese :variables
+     ;;          chinese-enable-avy-pinyin nil)
      docker
      emacs-lisp
      (git :variables
