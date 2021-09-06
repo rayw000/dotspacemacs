@@ -647,7 +647,8 @@ before packages are loaded."
     (global-set-key (kbd "C-c C-n") 'spacemacs/vcs-next-hunk)
     (global-set-key (kbd "C-c C-p") 'spacemacs/vcs-previous-hunk))
   (global-set-key (kbd "C-c C-f") 'find-name-dired)
-  (define-key projectile-mode-map (kbd "C-c g") 'projectile-ag)
+  (add-hook 'projectile-mode-hook
+            (lambda () (define-key projectile-mode-map (kbd "C-c g") 'projectile-ag)))
   (add-hook 'emacs-lisp-mode-hook 'aggressive-indent-mode)
 
   (defun split-window-horizontally-instead ()
