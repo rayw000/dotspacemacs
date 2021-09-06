@@ -55,7 +55,6 @@ This function should only modify configuration layer settings."
      emacs-lisp
      (git :variables
           magit-diff-refine-hunk t)
-     github
      go
      ;; helm
      helpful
@@ -132,8 +131,8 @@ This function should only modify configuration layer settings."
      (syntax-checking :variables
                       syntax-checking-enable-by-default nil)
      ;; tern
-     (treemacs :variables
-               treemacs-use-all-the-icons-theme t)
+     ;; (treemacs :variables
+     ;;           treemacs-use-all-the-icons-theme t)
      typescript
      unicode-fonts
      (version-control :variables
