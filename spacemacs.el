@@ -55,6 +55,7 @@ This function should only modify configuration layer settings."
      emacs-lisp
      (git :variables
           magit-diff-refine-hunk t)
+     github
      go
      ;; helm
      helpful
