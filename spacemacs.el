@@ -47,6 +47,7 @@ This function should only modify configuration layer settings."
             c-c++-backend 'lsp-ccls
             c-c++-adopt-subprojects t
             c-c++-lsp-enable-semantic-highlight 'rainbow
+            c-c++-enable-google-style t
             c-c++-dap-adapters '(dap-lldb dap-cpptools))
      csv
      ;; (chinese :variables
