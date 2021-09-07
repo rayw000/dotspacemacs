@@ -66,6 +66,11 @@ This function should only modify configuration layer settings."
                  js-indent-level 2
                  js2-strict-missing-semi-warning nil
                  js2-missing-semi-one-line-override t)
+     (erc :variables
+          erc-server-list `(("irc.libera.chat"
+                             :port "6697"
+                             :ssl t
+                             :nick "rayw")))
      (lsp :variables
           lsp-headerline-arrow ">"
           lsp-treemacs-theme "Iconless"
