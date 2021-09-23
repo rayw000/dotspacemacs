@@ -44,14 +44,16 @@ This function should only modify configuration layer settings."
                       tab-always-indent 'complete)
      better-defaults
      (c-c++ :variables
-            c-c++-backend 'lsp-ccls
+            ;; c-c++-backend 'lsp-ccls
             c-c++-adopt-subprojects t
-            c-c++-lsp-enable-semantic-highlight 'rainbow
+            ;; c-c++-lsp-enable-semantic-highlight 'rainbow
             c-c++-enable-google-style t
-            c-c++-dap-adapters '(dap-lldb dap-cpptools))
+            ;; c-c++-dap-adapters '(dap-lldb dap-cpptools)
+            )
      csv
      ;; (chinese :variables
      ;;          chinese-enable-avy-pinyin nil)
+     debug
      docker
      emacs-lisp
      (git :variables
@@ -66,15 +68,15 @@ This function should only modify configuration layer settings."
                  js-indent-level 2
                  js2-strict-missing-semi-warning nil
                  js2-missing-semi-one-line-override t)
-     (erc :variables
-          erc-server-list `(("irc.libera.chat"
-                             :port "6697"
-                             :ssl t
-                             :nick "rayw")))
-     (lsp :variables
-          lsp-headerline-arrow ">"
-          lsp-treemacs-theme "Iconless"
-          lsp-file-watch-threshold 256)
+     ;; (erc :variables
+     ;;      erc-server-list `(("irc.libera.chat"
+     ;;                         :port "6697"
+     ;;                         :ssl t
+     ;;                         :nick "rayw")))
+     ;; (lsp :variables
+     ;;      lsp-headerline-arrow ">"
+     ;;      lsp-treemacs-theme "Iconless"
+     ;;      lsp-file-watch-threshold 256)
      (markdown :variables
                markdown-live-preview-engine 'vmd)
      ;; multiple-cursors
@@ -155,7 +157,7 @@ This function should only modify configuration layer settings."
    ;; `dotspacemacs/user-config'. To use a local version of a package, use the
    ;; `:location' property: '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
-   dotspacemacs-additional-packages '(ag visual-regexp w3m)
+   dotspacemacs-additional-packages '(ag visual-regexp)
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -718,6 +720,7 @@ This function is called at the very end of Spacemacs initialization."
    ;; If you edit it by hand, you could mess it up, so be careful.
    ;; Your init file should contain only one such instance.
    ;; If there is more than one, they won't work right.
+   '(font-lock-comment-face ((t (:foreground "gray36"))))
    '(lsp-details-face ((t (:inherit shadow :foreground "gray31" :height 0.8))))
    '(match ((t (:inherit default :background "#151718" :foreground "red" :weight extra-bold))))
    '(shadow ((t (:foreground "grey30")))))
