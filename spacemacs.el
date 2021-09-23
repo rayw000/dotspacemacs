@@ -433,7 +433,7 @@ It should only modify the values of Spacemacs settings."
 
    ;; If non-nil `spacemacs/toggle-fullscreen' will not use native fullscreen.
    ;; Use to disable fullscreen animations in OSX. (default nil)
-   dotspacemacs-fullscreen-use-non-native nil
+   dotspacemacs-fullscreen-use-non-native t
 
    ;; If non-nil the frame is maximized when Emacs starts up.
    ;; Takes effect only if `dotspacemacs-fullscreen-at-startup' is nil.
@@ -694,7 +694,8 @@ before packages are loaded."
   (global-set-key (kbd "C-x |") 'split-window-horizontally-instead)
   (global-set-key (kbd "C-x _") 'split-window-vertically-instead)
   (when (fboundp 'vr/replace)
-    (global-set-key (kbd "C-c C-/") 'vr/replace)))
+    (global-set-key (kbd "C-c C-/") 'vr/replace))
+  (put 'narrow-to-page 'disabled nil))
 
 (defun dotspacemacs/emacs-custom-settings ()
   "Emacs custom settings.
