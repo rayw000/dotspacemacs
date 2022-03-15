@@ -39,16 +39,19 @@ This function should only modify configuration layer settings."
      ;; `M-m f e R' (Emacs style) to install them.
      ;; ----------------------------------------------------------------
      (auto-completion :variables
-                      company-tooltip-limit 20
                       company-idle-delay 0
-                      tab-always-indent 'complete)
+                      company-tooltip-limit 20
+                      company-tooltip-idle-delay 0
+                      company-minimum-prefix-length 2)
      better-defaults
      (c-c++ :variables
-            c-c++-backend 'lsp-ccls
+            ;; c-c++-backend 'lsp-ccls
+            c-c++-backend nil
             c-c++-adopt-subprojects t
-            c-c++-lsp-enable-semantic-highlight 'rainbow
+            ;; c-c++-lsp-enable-semantic-highlight 'rainbow
             c-c++-enable-google-style t
             c-c++-dap-adapters '(dap-lldb dap-cpptools))
+     cmake
      csv
      ;; (chinese :variables
      ;;          chinese-enable-avy-pinyin nil)
@@ -56,10 +59,13 @@ This function should only modify configuration layer settings."
      emacs-lisp
      (git :variables
           magit-diff-refine-hunk t)
+     (github :variables)
      go
      ;; helm
      helpful
      (html :variables)
+     (ipython-notebook :variables
+                       ein:output-area-inlined-images t)
      (ivy :variables
           ivy-extra-directories '("./"))
      (javascript :variables
@@ -71,15 +77,15 @@ This function should only modify configuration layer settings."
      ;;                         :port "6697"
      ;;                         :ssl t
      ;;                         :nick "rayw")))
-     (lsp :variables
-          lsp-headerline-arrow ">"
-          lsp-treemacs-theme "Iconless"
-          lsp-file-watch-threshold 256)
+     ;; (lsp :variables
+     ;;      lsp-headerline-arrow ">"
+     ;;      lsp-treemacs-theme "Iconless"
+     ;;      lsp-file-watch-threshold 256)
      (markdown :variables
                markdown-live-preview-engine 'vmd)
      ;; multiple-cursors
      (mu4e :variables
-           mu4e-installation-path (expand-file-name "~/repo/open-source/mu/dist/share/emacs/site-lisp/mu4e")
+           ;; mu4e-installation-path (expand-file-name "~/repo/open-source/mu/dist/share/emacs/site-lisp/mu4e")
            mu4e-enable-mode-line t
            mu4e-enable-notifications t
            mu4e-enable-async-operations t
@@ -114,13 +120,17 @@ This function should only modify configuration layer settings."
      nginx
      org
      ;; protobuf
+     (rust)
      (shell :variables
             shell-default-shell 'vterm
             shell-default-height 30
             shell-default-position 'bottom
             shell-enable-smart-eshell t)
      (python :variables
-             python-indent-offset 4)
+             python-indent-offset 4
+             ;; python-backend 'lsp
+             ;; python-lsp-server 'pyright
+     )
      spacemacs-editing
      (spacemacs-modeline :variables
                          spaceline-minor-modes-p nil)
@@ -224,7 +234,7 @@ It should only modify the values of Spacemacs settings."
    ;; Setting this >= 1 MB should increase performance for lsp servers
    ;; in emacs 27.
    ;; (default (* 1024 1024))
-   dotspacemacs-read-process-output-max (* 1024 1024 4)
+   dotspacemacs-read-process-output-max (* 1024 1024 128)
 
    ;; If non-nil then Spacelpa repository is the primary source to install
    ;; a locked version of packages. If nil then Spacemacs will install the
@@ -625,7 +635,8 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
    default-directory (expand-file-name "~/")
    source-directory (expand-file-name "~/repo/open-source/emacs"))
   (when (fboundp 'native-compile)
-    (setq comp-deferred-compilation-deny-list '("powerline"))
+    (setq comp-deferred-compilation-deny-list '("powerline")
+          native-comp-async-report-warnings-errors nil)
     (setq package-native-compile t))
   (when (configuration-layer/layer-used-p 'chinese)
     (spacemacs//set-monospaced-font "Monaco" "PingFang SC" 12 14)))
@@ -644,6 +655,8 @@ configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
   (global-set-key (kbd "M-`") 'other-window)
+  (when (configuration-layer/layer-used-p 'python)
+    (add-hook 'python-mode-hook (lambda () (setq-local flycheck-checker 'python-pyright))))
   (when (configuration-layer/layer-used-p 'ivy)
     (define-key ivy-minibuffer-map (kbd "<tab>") (lambda ()
                                                    (interactive)
@@ -652,6 +665,10 @@ before packages are loaded."
                                                          ((>= (+ ivy--index 1) ivy--length)
                                                           (ivy-set-index 0))
                                                          (t (ivy-next-line))))))
+  ;; (when (configuration-layer/package-used-p 'company)
+  ;;   (add-hook 'company-mode-hook
+  ;;             (lambda () (define-key company-mode-map [remap indent-for-tab-command]
+  ;;                                    'company-indent-or-complete-common))))
   (when (configuration-layer/layer-used-p 'mu4e)
     (if-let* ((context-file "~/.mu4e.el")
               (file-exists-p context-file))
@@ -705,8 +722,30 @@ This function is called at the very end of Spacemacs initialization."
    ;; If you edit it by hand, you could mess it up, so be careful.
    ;; Your init file should contain only one such instance.
    ;; If there is more than one, they won't work right.
+   '(ansi-color-names-vector
+     ["#0a0814" "#f2241f" "#67b11d" "#b1951d" "#4f97d7" "#a31db1" "#28def0" "#b2b2b2"])
    '(evil-want-Y-yank-to-eol nil)
+   '(hl-todo-keyword-faces
+     '(("TODO" . "#dc752f")
+       ("NEXT" . "#dc752f")
+       ("THEM" . "#2d9574")
+       ("PROG" . "#4f97d7")
+       ("OKAY" . "#4f97d7")
+       ("DONT" . "#f2241f")
+       ("FAIL" . "#f2241f")
+       ("DONE" . "#86dc2f")
+       ("NOTE" . "#b1951d")
+       ("KLUDGE" . "#b1951d")
+       ("HACK" . "#b1951d")
+       ("TEMP" . "#b1951d")
+       ("FIXME" . "#dc752f")
+       ("XXX+" . "#dc752f")
+       ("\\?\\?\\?+" . "#dc752f")))
+   '(js-switch-indent-offset 2)
+   ;; '(lsp-file-watch-threshold 10240)
    '(org-export-with-planning t)
+   '(org-fontify-done-headline nil)
+   '(org-fontify-todo-headline nil)
    '(org-todo-keyword-faces
      '(("TODO" . "royalblue")
        ("WAITING" . "magenta")
@@ -714,14 +753,17 @@ This function is called at the very end of Spacemacs initialization."
        ("DONE" . "chartreuse")))
    '(org-todo-keywords '((sequence "TODO" "WAITING" "CANCEL" "DONE")))
    '(package-selected-packages
-     '(test-simple loc-changes load-relative lsp-ui lsp-python-ms lsp-pyright lsp-origami origami lsp-ivy dap-mode lsp-treemacs bui ccls lsp-mode spinner ansi git commander cask realgud-lldb treemacs-evil tern evil-easymotion yasnippet-snippets yapfify yaml-mode xterm-color ws-butler which-key wgrep web-mode web-beautify vterm vmd-mode visual-regexp uuidgen use-package unkillable-scratch unicode-fonts unfill undo-tree treemacs-projectile treemacs-persp treemacs-magit treemacs-icons-dired treemacs-all-the-icons toc-org tide terminal-here tagedit symon string-inflection string-edit sphinx-doc spaceline-all-the-icons smex smeargle smartparens slim-mode shell-pop seti-theme scss-mode sass-mode reveal-in-osx-finder realgud quickrun pytest pyenv-mode py-isort pug-mode protobuf-mode prettier-js poetry pippel pipenv pip-requirements persistent-scratch pcre2el password-generator overseer osx-trash osx-dictionary osx-clipboard orgit-forge org-superstar org-rich-yank org-present org-pomodoro org-mime org-download org-contrib org-cliplink npm-mode nose nodejs-repl nginx-mode nameless mwim multi-term multi-line mu4e-maildirs-extension mu4e-alert mmm-mode markdown-toc macrostep lorem-ipsum livid-mode live-py-mode link-hint launchctl json-navigator js2-refactor js-doc ivy-yasnippet ivy-xref ivy-rtags ivy-hydra ivy-avy inspector importmagic impatient-mode hybrid-mode hungry-delete helpful helm-make google-c-style godoctor go-tag go-rename go-impl go-guru go-gen-test go-fill-struct go-eldoc gnuplot gitignore-templates gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md gendoxy fuzzy font-lock+ flyspell-correct-ivy flycheck-ycmd flycheck-rtags flycheck-pos-tip flycheck-package flycheck-elsa flx fancy-battery eyebrowse expand-region evil-org eval-sexp-fu eshell-z eshell-prompt-extras esh-help emr emmet-mode elisp-slime-nav editorconfig drag-stuff dotenv-mode dockerfile-mode docker disaster dired-quick-sort diminish diff-hl cython-mode csv-mode cpp-auto-include counsel-projectile counsel-css company-ycmd company-web company-rtags company-go company-c-headers company-anaconda clean-aindent-mode browse-at-remote blacken bind-map auto-yasnippet auto-dictionary auto-compile aggressive-indent ag ac-ispell)))
+     '(eglot org-translate cmake-mode pacmacs toml-mode ron-mode racer rust-mode flycheck-rust cargo grip-mode github-search github-clone gh marshal logito w3m ein polymode anaphora websocket test-simple loc-changes load-relative spinner ansi git commander cask realgud-lldb treemacs-evil tern evil-easymotion yasnippet-snippets yapfify yaml-mode xterm-color ws-butler which-key wgrep web-mode web-beautify vterm vmd-mode visual-regexp uuidgen use-package unkillable-scratch unicode-fonts unfill undo-tree treemacs-projectile treemacs-persp treemacs-magit treemacs-icons-dired treemacs-all-the-icons toc-org tide terminal-here tagedit symon string-inflection string-edit sphinx-doc spaceline-all-the-icons smex smeargle smartparens slim-mode shell-pop seti-theme scss-mode sass-mode reveal-in-osx-finder realgud quickrun pytest pyenv-mode py-isort pug-mode protobuf-mode prettier-js poetry pippel pipenv pip-requirements persistent-scratch pcre2el password-generator overseer osx-trash osx-dictionary osx-clipboard orgit-forge org-superstar org-rich-yank org-present org-pomodoro org-mime org-download org-contrib org-cliplink npm-mode nose nodejs-repl nginx-mode nameless mwim multi-term multi-line mu4e-maildirs-extension mu4e-alert mmm-mode markdown-toc macrostep lorem-ipsum livid-mode live-py-mode link-hint launchctl json-navigator js2-refactor js-doc ivy-yasnippet ivy-xref ivy-rtags ivy-hydra ivy-avy inspector importmagic impatient-mode hybrid-mode hungry-delete helpful helm-make google-c-style godoctor go-tag go-rename go-impl go-guru go-gen-test go-fill-struct go-eldoc gnuplot gitignore-templates gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md gendoxy fuzzy font-lock+ flyspell-correct-ivy flycheck-ycmd flycheck-rtags flycheck-pos-tip flycheck-package flycheck-elsa flx fancy-battery eyebrowse expand-region evil-org eval-sexp-fu eshell-z eshell-prompt-extras esh-help emr emmet-mode elisp-slime-nav editorconfig drag-stuff dotenv-mode dockerfile-mode docker disaster dired-quick-sort diminish diff-hl cython-mode csv-mode cpp-auto-include counsel-projectile counsel-css company-ycmd company-web company-rtags company-go company-c-headers company-anaconda clean-aindent-mode browse-at-remote blacken bind-map auto-yasnippet auto-dictionary auto-compile aggressive-indent ag ac-ispell)))
   (custom-set-faces
    ;; custom-set-faces was added by Custom.
    ;; If you edit it by hand, you could mess it up, so be careful.
    ;; Your init file should contain only one such instance.
    ;; If there is more than one, they won't work right.
    '(font-lock-comment-face ((t (:foreground "gray36"))))
-   '(lsp-details-face ((t (:inherit shadow :foreground "gray31" :height 0.8))))
+   '(fringe ((t (:foreground "#2F3C42"))))
+   '(highlight ((t (:background "gray32"))))
+   ;; '(lsp-details-face ((t (:inherit shadow :foreground "gray31" :height 0.8))))
    '(match ((t (:inherit default :background "#151718" :foreground "red" :weight extra-bold))))
+   '(mode-line ((t (:background "#0D1011" :foreground "#D4D7D6" :underline "#4F99D3" :family "Monaco"))))
    '(shadow ((t (:foreground "grey30")))))
   )
