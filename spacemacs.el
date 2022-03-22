@@ -59,13 +59,13 @@ This function should only modify configuration layer settings."
      emacs-lisp
      (git :variables
           magit-diff-refine-hunk t)
-     (github :variables)
+     ;; (github :variables)
      go
      ;; helm
      helpful
      (html :variables)
-     (ipython-notebook :variables
-                       ein:output-area-inlined-images t)
+     ;; (ipython-notebook :variables
+     ;;                   ein:output-area-inlined-images t)
      (ivy :variables
           ivy-extra-directories '("./"))
      (javascript :variables
@@ -130,13 +130,14 @@ This function should only modify configuration layer settings."
              python-indent-offset 4
              ;; python-backend 'lsp
              ;; python-lsp-server 'pyright
-     )
+             )
      spacemacs-editing
      (spacemacs-modeline :variables
                          spaceline-minor-modes-p nil)
      spacemacs-layouts
-     (spell-checking :variables
-                     spell-checking-enable-by-default nil)
+     ;; (spell-checking :variables
+     ;;                 spell-checking-enable-by-default nil)
+     (translate :variables)
      (osx :variables
           osx-command-as 'meta
           osx-function-as nil
@@ -144,8 +145,8 @@ This function should only modify configuration layer settings."
           osx-right-option-as 'left
           osx-right-control-as 'left
           osx-swap-option-and-command nil)
-     (syntax-checking :variables
-                      syntax-checking-enable-by-default nil)
+     ;; (syntax-checking :variables
+     ;;                  syntax-checking-enable-by-default nil)
      ;; tern
      (treemacs :variables
                treemacs-use-all-the-icons-theme t)
@@ -234,7 +235,7 @@ It should only modify the values of Spacemacs settings."
    ;; Setting this >= 1 MB should increase performance for lsp servers
    ;; in emacs 27.
    ;; (default (* 1024 1024))
-   dotspacemacs-read-process-output-max (* 1024 1024 128)
+   dotspacemacs-read-process-output-max (* 1024 1024 16)
 
    ;; If non-nil then Spacelpa repository is the primary source to install
    ;; a locked version of packages. If nil then Spacemacs will install the
@@ -742,7 +743,6 @@ This function is called at the very end of Spacemacs initialization."
        ("XXX+" . "#dc752f")
        ("\\?\\?\\?+" . "#dc752f")))
    '(js-switch-indent-offset 2)
-   ;; '(lsp-file-watch-threshold 10240)
    '(org-export-with-planning t)
    '(org-fontify-done-headline nil)
    '(org-fontify-todo-headline nil)
@@ -753,7 +753,7 @@ This function is called at the very end of Spacemacs initialization."
        ("DONE" . "chartreuse")))
    '(org-todo-keywords '((sequence "TODO" "WAITING" "CANCEL" "DONE")))
    '(package-selected-packages
-     '(eglot org-translate cmake-mode pacmacs toml-mode ron-mode racer rust-mode flycheck-rust cargo grip-mode github-search github-clone gh marshal logito w3m ein polymode anaphora websocket test-simple loc-changes load-relative spinner ansi git commander cask realgud-lldb treemacs-evil tern evil-easymotion yasnippet-snippets yapfify yaml-mode xterm-color ws-butler which-key wgrep web-mode web-beautify vterm vmd-mode visual-regexp uuidgen use-package unkillable-scratch unicode-fonts unfill undo-tree treemacs-projectile treemacs-persp treemacs-magit treemacs-icons-dired treemacs-all-the-icons toc-org tide terminal-here tagedit symon string-inflection string-edit sphinx-doc spaceline-all-the-icons smex smeargle smartparens slim-mode shell-pop seti-theme scss-mode sass-mode reveal-in-osx-finder realgud quickrun pytest pyenv-mode py-isort pug-mode protobuf-mode prettier-js poetry pippel pipenv pip-requirements persistent-scratch pcre2el password-generator overseer osx-trash osx-dictionary osx-clipboard orgit-forge org-superstar org-rich-yank org-present org-pomodoro org-mime org-download org-contrib org-cliplink npm-mode nose nodejs-repl nginx-mode nameless mwim multi-term multi-line mu4e-maildirs-extension mu4e-alert mmm-mode markdown-toc macrostep lorem-ipsum livid-mode live-py-mode link-hint launchctl json-navigator js2-refactor js-doc ivy-yasnippet ivy-xref ivy-rtags ivy-hydra ivy-avy inspector importmagic impatient-mode hybrid-mode hungry-delete helpful helm-make google-c-style godoctor go-tag go-rename go-impl go-guru go-gen-test go-fill-struct go-eldoc gnuplot gitignore-templates gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md gendoxy fuzzy font-lock+ flyspell-correct-ivy flycheck-ycmd flycheck-rtags flycheck-pos-tip flycheck-package flycheck-elsa flx fancy-battery eyebrowse expand-region evil-org eval-sexp-fu eshell-z eshell-prompt-extras esh-help emr emmet-mode elisp-slime-nav editorconfig drag-stuff dotenv-mode dockerfile-mode docker disaster dired-quick-sort diminish diff-hl cython-mode csv-mode cpp-auto-include counsel-projectile counsel-css company-ycmd company-web company-rtags company-go company-c-headers company-anaconda clean-aindent-mode browse-at-remote blacken bind-map auto-yasnippet auto-dictionary auto-compile aggressive-indent ag ac-ispell)))
+     '(go-translate subed translate-mode eglot org-translate cmake-mode pacmacs toml-mode ron-mode racer rust-mode flycheck-rust cargo grip-mode github-search github-clone gh marshal logito w3m ein polymode anaphora websocket test-simple loc-changes load-relative spinner ansi git commander cask realgud-lldb treemacs-evil tern evil-easymotion yasnippet-snippets yapfify yaml-mode xterm-color ws-butler which-key wgrep web-mode web-beautify vterm vmd-mode visual-regexp uuidgen use-package unkillable-scratch unicode-fonts unfill undo-tree treemacs-projectile treemacs-persp treemacs-magit treemacs-icons-dired treemacs-all-the-icons toc-org tide terminal-here tagedit symon string-inflection string-edit sphinx-doc spaceline-all-the-icons smex smeargle smartparens slim-mode shell-pop seti-theme scss-mode sass-mode reveal-in-osx-finder realgud quickrun pytest pyenv-mode py-isort pug-mode protobuf-mode prettier-js poetry pippel pipenv pip-requirements persistent-scratch pcre2el password-generator overseer osx-trash osx-dictionary osx-clipboard orgit-forge org-superstar org-rich-yank org-present org-pomodoro org-mime org-download org-contrib org-cliplink npm-mode nose nodejs-repl nginx-mode nameless mwim multi-term multi-line mu4e-maildirs-extension mu4e-alert mmm-mode markdown-toc macrostep lorem-ipsum livid-mode live-py-mode link-hint launchctl json-navigator js2-refactor js-doc ivy-yasnippet ivy-xref ivy-rtags ivy-hydra ivy-avy inspector importmagic impatient-mode hybrid-mode hungry-delete helpful helm-make google-c-style godoctor go-tag go-rename go-impl go-guru go-gen-test go-fill-struct go-eldoc gnuplot gitignore-templates gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md gendoxy fuzzy font-lock+ flyspell-correct-ivy flycheck-ycmd flycheck-rtags flycheck-pos-tip flycheck-package flycheck-elsa flx fancy-battery eyebrowse expand-region evil-org eval-sexp-fu eshell-z eshell-prompt-extras esh-help emr emmet-mode elisp-slime-nav editorconfig drag-stuff dotenv-mode dockerfile-mode docker disaster dired-quick-sort diminish diff-hl cython-mode csv-mode cpp-auto-include counsel-projectile counsel-css company-ycmd company-web company-rtags company-go company-c-headers company-anaconda clean-aindent-mode browse-at-remote blacken bind-map auto-yasnippet auto-dictionary auto-compile aggressive-indent ag ac-ispell)))
   (custom-set-faces
    ;; custom-set-faces was added by Custom.
    ;; If you edit it by hand, you could mess it up, so be careful.
@@ -762,8 +762,8 @@ This function is called at the very end of Spacemacs initialization."
    '(font-lock-comment-face ((t (:foreground "gray36"))))
    '(fringe ((t (:foreground "#2F3C42"))))
    '(highlight ((t (:background "gray32"))))
-   ;; '(lsp-details-face ((t (:inherit shadow :foreground "gray31" :height 0.8))))
    '(match ((t (:inherit default :background "#151718" :foreground "red" :weight extra-bold))))
    '(mode-line ((t (:background "#0D1011" :foreground "#D4D7D6" :underline "#4F99D3" :family "Monaco"))))
-   '(shadow ((t (:foreground "grey30")))))
+   '(shadow ((t (:foreground "grey30"))))
+   '(translate-paragraph-highlight ((t (:extend t :background "grey15")))))
   )
