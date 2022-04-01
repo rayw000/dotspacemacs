@@ -50,9 +50,10 @@ This function should only modify configuration layer settings."
             c-c++-adopt-subprojects t
             ;; c-c++-lsp-enable-semantic-highlight 'rainbow
             c-c++-enable-google-style t
-            c-c++-dap-adapters '(dap-lldb dap-cpptools))
+            ;; c-c++-dap-adapters '(dap-lldb dap-cpptools)
+            )
      cmake
-     csv
+     ;; csv
      ;; (chinese :variables
      ;;          chinese-enable-avy-pinyin nil)
      docker
@@ -85,7 +86,7 @@ This function should only modify configuration layer settings."
                markdown-live-preview-engine 'vmd)
      ;; multiple-cursors
      (mu4e :variables
-           ;; mu4e-installation-path (expand-file-name "~/repo/open-source/mu/dist/share/emacs/site-lisp/mu4e")
+           mu4e-installation-path (expand-file-name "~/repo/open-source/mu/dist/share/emacs/site-lisp/mu4e")
            mu4e-enable-mode-line t
            mu4e-enable-notifications t
            mu4e-enable-async-operations t
@@ -120,7 +121,7 @@ This function should only modify configuration layer settings."
      nginx
      org
      ;; protobuf
-     (rust)
+     ;; (rust)
      (shell :variables
             shell-default-shell 'vterm
             shell-default-height 30
@@ -137,7 +138,7 @@ This function should only modify configuration layer settings."
      spacemacs-layouts
      ;; (spell-checking :variables
      ;;                 spell-checking-enable-by-default nil)
-     (translate :variables)
+     (translate :variables gts-translate-list '(("en" "zh")))
      (osx :variables
           osx-command-as 'meta
           osx-function-as nil
@@ -148,9 +149,9 @@ This function should only modify configuration layer settings."
      ;; (syntax-checking :variables
      ;;                  syntax-checking-enable-by-default nil)
      ;; tern
-     (treemacs :variables
-               treemacs-use-all-the-icons-theme t)
-     typescript
+     ;; (treemacs :variables
+     ;;           treemacs-use-all-the-icons-theme t)
+     ;; typescript
      unicode-fonts
      (version-control :variables
                       version-control-diff-side 'left
@@ -198,7 +199,7 @@ It should only modify the values of Spacemacs settings."
    dotspacemacs-enable-emacs-pdumper nil
 
    ;; Refer to https://github.com/syl20bnr/spacemacs/pull/14528
-   dotspacemacs-emacs-dumper-dump-file "spacemacs-27.1.pdmp"
+   dotspacemacs-emacs-dumper-dump-file "spacemacs-29.0.pdmp"
 
    ;; Name of executable file pointing to emacs 27+. This executable must be
    ;; in your PATH.
@@ -290,8 +291,7 @@ It should only modify the values of Spacemacs settings."
    ;; pair of numbers, e.g. `(recents-by-project . (7 .  5))', where the first
    ;; number is the project limit and the second the limit on the recent files
    ;; within a project.
-   dotspacemacs-startup-lists '((recents . 5)
-                                (projects . 7))
+   dotspacemacs-startup-lists nil
 
    ;; True if the home buffer should respond to resize events. (default t)
    dotspacemacs-startup-buffer-responsive t
@@ -343,10 +343,7 @@ It should only modify the values of Spacemacs settings."
    ;; Default font or prioritized list of fonts. The `:size' can be specified as
    ;; a non-negative integer (pixel size), or a floating-point (point size).
    ;; Point size is recommended, because it's device independent. (default 10.0)
-   dotspacemacs-default-font '("Monaco"
-                               :size 12.0
-                               :weight normal
-                               :width normal)
+   dotspacemacs-default-font '("Monaco" :size 12.0 :weight normal :width normal)
 
    ;; The leader key (default "SPC")
    dotspacemacs-leader-key "SPC"
@@ -753,7 +750,7 @@ This function is called at the very end of Spacemacs initialization."
        ("DONE" . "chartreuse")))
    '(org-todo-keywords '((sequence "TODO" "WAITING" "CANCEL" "DONE")))
    '(package-selected-packages
-     '(go-translate subed translate-mode eglot org-translate cmake-mode pacmacs toml-mode ron-mode racer rust-mode flycheck-rust cargo grip-mode github-search github-clone gh marshal logito w3m ein polymode anaphora websocket test-simple loc-changes load-relative spinner ansi git commander cask realgud-lldb treemacs-evil tern evil-easymotion yasnippet-snippets yapfify yaml-mode xterm-color ws-butler which-key wgrep web-mode web-beautify vterm vmd-mode visual-regexp uuidgen use-package unkillable-scratch unicode-fonts unfill undo-tree treemacs-projectile treemacs-persp treemacs-magit treemacs-icons-dired treemacs-all-the-icons toc-org tide terminal-here tagedit symon string-inflection string-edit sphinx-doc spaceline-all-the-icons smex smeargle smartparens slim-mode shell-pop seti-theme scss-mode sass-mode reveal-in-osx-finder realgud quickrun pytest pyenv-mode py-isort pug-mode protobuf-mode prettier-js poetry pippel pipenv pip-requirements persistent-scratch pcre2el password-generator overseer osx-trash osx-dictionary osx-clipboard orgit-forge org-superstar org-rich-yank org-present org-pomodoro org-mime org-download org-contrib org-cliplink npm-mode nose nodejs-repl nginx-mode nameless mwim multi-term multi-line mu4e-maildirs-extension mu4e-alert mmm-mode markdown-toc macrostep lorem-ipsum livid-mode live-py-mode link-hint launchctl json-navigator js2-refactor js-doc ivy-yasnippet ivy-xref ivy-rtags ivy-hydra ivy-avy inspector importmagic impatient-mode hybrid-mode hungry-delete helpful helm-make google-c-style godoctor go-tag go-rename go-impl go-guru go-gen-test go-fill-struct go-eldoc gnuplot gitignore-templates gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md gendoxy fuzzy font-lock+ flyspell-correct-ivy flycheck-ycmd flycheck-rtags flycheck-pos-tip flycheck-package flycheck-elsa flx fancy-battery eyebrowse expand-region evil-org eval-sexp-fu eshell-z eshell-prompt-extras esh-help emr emmet-mode elisp-slime-nav editorconfig drag-stuff dotenv-mode dockerfile-mode docker disaster dired-quick-sort diminish diff-hl cython-mode csv-mode cpp-auto-include counsel-projectile counsel-css company-ycmd company-web company-rtags company-go company-c-headers company-anaconda clean-aindent-mode browse-at-remote blacken bind-map auto-yasnippet auto-dictionary auto-compile aggressive-indent ag ac-ispell)))
+     '(tern yapfify xterm-color ws-butler wgrep web-beautify vmd-mode visual-regexp uuidgen use-package unkillable-scratch unicode-fonts unfill undo-tree translate-mode toc-org terminal-here tagedit symon string-inflection string-edit sphinx-doc spaceline-all-the-icons smex smeargle smartparens slim-mode shell-pop seti-theme scss-mode sass-mode reveal-in-osx-finder quickrun pytest pyenv-mode pydoc py-isort pug-mode prettier-js posframe poetry pippel pipenv pip-requirements persp-mode persistent-scratch pcre2el password-generator overseer osx-trash osx-dictionary osx-clipboard orgit-forge org-superstar org-rich-yank org-present org-pomodoro org-mime org-download org-contrib org-cliplink npm-mode nose nodejs-repl nginx-mode nameless mwim multi-term multi-line mu4e-maildirs-extension mu4e-alert mmm-mode markdown-toc macrostep lorem-ipsum livid-mode live-py-mode link-hint launchctl json-reformat json-navigator js2-refactor js-doc ivy-yasnippet ivy-xref ivy-rtags ivy-hydra ivy-avy inspector importmagic impatient-mode hybrid-mode hungry-delete helpful helm-make google-c-style godoctor go-translate go-tag go-rename go-impl go-guru go-gen-test go-fill-struct go-eldoc gnuplot gitignore-templates git-timemachine git-modes git-messenger git-link gh-md gendoxy fuzzy font-lock+ flycheck-package flycheck-elsa flx fancy-battery eyebrowse expand-region evil-org eval-sexp-fu eshell-z eshell-prompt-extras esh-help emr emmet-mode elisp-slime-nav elisp-def editorconfig drag-stuff dotenv-mode dockerfile-mode docker disaster dired-quick-sort diminish diff-hl cython-mode cpp-auto-include counsel-projectile counsel-css company-ycmd company-web company-rtags company-go company-c-headers company-anaconda cmake-mode clean-aindent-mode browse-at-remote blacken bind-map auto-yasnippet auto-compile aggressive-indent ag ac-ispell)))
   (custom-set-faces
    ;; custom-set-faces was added by Custom.
    ;; If you edit it by hand, you could mess it up, so be careful.
