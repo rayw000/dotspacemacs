@@ -660,6 +660,7 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
+  (menu-bar-mode -1)
   (global-set-key (kbd "M-`") 'other-window)
   (when (configuration-layer/layer-used-p 'python)
     (add-hook 'python-mode-hook (lambda () (setq-local flycheck-checker 'python-pyright))))
