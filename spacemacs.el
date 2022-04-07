@@ -121,7 +121,7 @@ This function should only modify configuration layer settings."
      nginx
      org
      ;; protobuf
-     ;; (rust)
+     (rust)
      (shell :variables
             shell-default-shell 'vterm
             shell-default-height 30
