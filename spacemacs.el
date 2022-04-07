@@ -78,10 +78,10 @@ This function should only modify configuration layer settings."
      ;;                         :port "6697"
      ;;                         :ssl t
      ;;                         :nick "rayw")))
-     ;; (lsp :variables
-     ;;      lsp-headerline-arrow ">"
-     ;;      lsp-treemacs-theme "Iconless"
-     ;;      lsp-file-watch-threshold 256)
+     (lsp :variables
+          lsp-headerline-arrow ">"
+          lsp-treemacs-theme "Iconless"
+          lsp-file-watch-threshold 256)
      (markdown :variables
                markdown-live-preview-engine 'vmd)
      ;; multiple-cursors
@@ -121,7 +121,10 @@ This function should only modify configuration layer settings."
      nginx
      org
      ;; protobuf
-     (rust)
+     (rust :variables
+           lsp-rust-server 'rust-analyzer
+           rust-backend 'lsp
+           flycheck-rust-cargo-executable (expand-file-name "~/.cargo/bin/cargo"))
      (shell :variables
             shell-default-shell 'vterm
             shell-default-height 30
@@ -759,7 +762,7 @@ This function is called at the very end of Spacemacs initialization."
        ("DONE" . "chartreuse")))
    '(org-todo-keywords '((sequence "TODO" "WAITING" "CANCEL" "DONE")))
    '(package-selected-packages
-     '(toml-mode ron-mode racer pos-tip rust-mode helm-gtags helm helm-core ggtags flycheck-rust dap-mode lsp-treemacs bui lsp-mode treemacs cfrs pfuture ace-window spinner counsel-gtags cargo github-review tern yapfify xterm-color ws-butler wgrep web-beautify vmd-mode visual-regexp uuidgen use-package unkillable-scratch unicode-fonts unfill undo-tree translate-mode toc-org terminal-here tagedit symon string-inflection string-edit sphinx-doc spaceline-all-the-icons smex smeargle smartparens slim-mode shell-pop seti-theme scss-mode sass-mode reveal-in-osx-finder quickrun pytest pyenv-mode pydoc py-isort pug-mode prettier-js posframe poetry pippel pipenv pip-requirements persp-mode persistent-scratch pcre2el password-generator overseer osx-trash osx-dictionary osx-clipboard orgit-forge org-superstar org-rich-yank org-present org-pomodoro org-mime org-download org-contrib org-cliplink npm-mode nose nodejs-repl nginx-mode nameless mwim multi-term multi-line mu4e-maildirs-extension mu4e-alert mmm-mode markdown-toc macrostep lorem-ipsum livid-mode live-py-mode link-hint launchctl json-reformat json-navigator js2-refactor js-doc ivy-yasnippet ivy-xref ivy-rtags ivy-hydra ivy-avy inspector importmagic impatient-mode hybrid-mode hungry-delete helpful helm-make google-c-style godoctor go-translate go-tag go-rename go-impl go-guru go-gen-test go-fill-struct go-eldoc gnuplot gitignore-templates git-timemachine git-modes git-messenger git-link gh-md gendoxy fuzzy font-lock+ flycheck-package flycheck-elsa flx fancy-battery eyebrowse expand-region evil-org eval-sexp-fu eshell-z eshell-prompt-extras esh-help emr emmet-mode elisp-slime-nav elisp-def editorconfig drag-stuff dotenv-mode dockerfile-mode docker disaster dired-quick-sort diminish diff-hl cython-mode cpp-auto-include counsel-projectile counsel-css company-ycmd company-web company-rtags company-go company-c-headers company-anaconda cmake-mode clean-aindent-mode browse-at-remote blacken bind-map auto-yasnippet auto-compile aggressive-indent ag ac-ispell)))
+     '(lsp-ui lsp-python-ms lsp-pyright lsp-origami origami lsp-ivy flycheck-ycmd flycheck-rtags flycheck-pos-tip ccls toml-mode ron-mode racer pos-tip rust-mode helm-gtags helm helm-core ggtags flycheck-rust dap-mode lsp-treemacs bui lsp-mode treemacs cfrs pfuture ace-window spinner counsel-gtags cargo github-review tern yapfify xterm-color ws-butler wgrep web-beautify vmd-mode visual-regexp uuidgen use-package unkillable-scratch unicode-fonts unfill undo-tree translate-mode toc-org terminal-here tagedit symon string-inflection string-edit sphinx-doc spaceline-all-the-icons smex smeargle smartparens slim-mode shell-pop seti-theme scss-mode sass-mode reveal-in-osx-finder quickrun pytest pyenv-mode pydoc py-isort pug-mode prettier-js posframe poetry pippel pipenv pip-requirements persp-mode persistent-scratch pcre2el password-generator overseer osx-trash osx-dictionary osx-clipboard orgit-forge org-superstar org-rich-yank org-present org-pomodoro org-mime org-download org-contrib org-cliplink npm-mode nose nodejs-repl nginx-mode nameless mwim multi-term multi-line mu4e-maildirs-extension mu4e-alert mmm-mode markdown-toc macrostep lorem-ipsum livid-mode live-py-mode link-hint launchctl json-reformat json-navigator js2-refactor js-doc ivy-yasnippet ivy-xref ivy-rtags ivy-hydra ivy-avy inspector importmagic impatient-mode hybrid-mode hungry-delete helpful helm-make google-c-style godoctor go-translate go-tag go-rename go-impl go-guru go-gen-test go-fill-struct go-eldoc gnuplot gitignore-templates git-timemachine git-modes git-messenger git-link gh-md gendoxy fuzzy font-lock+ flycheck-package flycheck-elsa flx fancy-battery eyebrowse expand-region evil-org eval-sexp-fu eshell-z eshell-prompt-extras esh-help emr emmet-mode elisp-slime-nav elisp-def editorconfig drag-stuff dotenv-mode dockerfile-mode docker disaster dired-quick-sort diminish diff-hl cython-mode cpp-auto-include counsel-projectile counsel-css company-ycmd company-web company-rtags company-go company-c-headers company-anaconda cmake-mode clean-aindent-mode browse-at-remote blacken bind-map auto-yasnippet auto-compile aggressive-indent ag ac-ispell)))
   (custom-set-faces
    ;; custom-set-faces was added by Custom.
    ;; If you edit it by hand, you could mess it up, so be careful.
