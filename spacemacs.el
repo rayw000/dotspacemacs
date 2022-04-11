@@ -124,7 +124,8 @@ This function should only modify configuration layer settings."
      (rust :variables
            lsp-rust-server 'rust-analyzer
            rust-backend 'lsp
-           flycheck-rust-cargo-executable (expand-file-name "~/.cargo/bin/cargo"))
+           flycheck-rust-cargo-executable (expand-file-name "~/.cargo/bin/cargo")
+           cargo-process--command-watch "watch -x run")
      (shell :variables
             shell-default-shell 'vterm
             shell-default-height 30
