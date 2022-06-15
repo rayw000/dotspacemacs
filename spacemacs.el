@@ -9,7 +9,7 @@ This function should only modify configuration layer settings."
    ;; Base distribution to use. This is a layer contained in the directory
    ;; `+distribution'. For now available distributions are `spacemacs-base'
    ;; or `spacemacs'. (default 'spacemacs)
-   dotspacemacs-distribution 'spacemacs-base
+   dotspacemacs-distribution 'spacemacs
 
    ;; Lazy installation of layers (i.e. layers are installed only when a file
    ;; with a supported type is opened). Possible values are `all', `unused'
@@ -45,7 +45,7 @@ This function should only modify configuration layer settings."
                       company-minimum-prefix-length 2)
      better-defaults
      (c-c++ :variables
-            ;; c-c++-backend 'lsp-ccls
+            c-c++-backend 'lsp-ccls
             c-c++-backend nil
             c-c++-adopt-subprojects t
             ;; c-c++-lsp-enable-semantic-highlight 'rainbow
@@ -56,6 +56,7 @@ This function should only modify configuration layer settings."
      ;; csv
      ;; (chinese :variables
      ;;          chinese-enable-avy-pinyin nil)
+     ;; dap
      docker
      emacs-lisp
      (git :variables
@@ -81,7 +82,7 @@ This function should only modify configuration layer settings."
      (lsp :variables
           lsp-headerline-arrow ">"
           lsp-treemacs-theme "Iconless"
-          lsp-file-watch-threshold 256)
+          lsp-file-watch-threshold 4096)
      (markdown :variables
                markdown-live-preview-engine 'vmd)
      ;; multiple-cursors
@@ -153,9 +154,9 @@ This function should only modify configuration layer settings."
      ;; (syntax-checking :variables
      ;;                  syntax-checking-enable-by-default nil)
      ;; tern
-     ;; (treemacs :variables
-     ;;           treemacs-use-all-the-icons-theme t)
-     ;; typescript
+     (treemacs :variables
+               treemacs-use-all-the-icons-theme t)
+     typescript
      unicode-fonts
      (version-control :variables
                       version-control-diff-side 'left
@@ -287,6 +288,13 @@ It should only modify the values of Spacemacs settings."
    ;; If the value is nil then no banner is displayed. (default 'official)
    dotspacemacs-startup-banner 0
 
+   ;; Scale factor controls the scaling (size) of the startup banner. Default
+   ;; value is `auto' for scaling the logo automatically to fit all buffer
+   ;; contents, to a maximum of the full image height and a minimum of 3 line
+   ;; heights. If set to a number (int or float) it is used as a constant
+   ;; scaling factor for the default logo size.
+   dotspacemacs-startup-banner-scale 'auto
+
    ;; List of items to show in startup buffer or an association list of
    ;; the form `(list-type . list-size)`. If nil then it is disabled.
    ;; Possible values for list-type are:
@@ -345,7 +353,7 @@ It should only modify the values of Spacemacs settings."
    ;; refer to the DOCUMENTATION.org for more info on how to create your own
    ;; spaceline theme. Value can be a symbol or list with additional properties.
    ;; (default '(spacemacs :separator wave :separator-scale 1.5))
-   dotspacemacs-mode-line-theme '(spacemacs :separator zigzag :separator-scale 1.05)
+   dotspacemacs-mode-line-theme '(spacemacs :separator nil :separator-scale 1.05)
 
    ;; If non-nil the cursor color matches the state color in GUI Emacs.
    ;; (default t)
@@ -666,6 +674,8 @@ Put your configuration code here, except for variables that should be set
 before packages are loaded."
   (menu-bar-mode -1)
   (global-set-key (kbd "M-`") 'other-window)
+  (when (functionp 'projectile-ag)
+    (global-set-key (kbd "C-c g") 'projectile-ag))
   (when (configuration-layer/layer-used-p 'python)
     (add-hook 'python-mode-hook (lambda () (setq-local flycheck-checker 'python-pyright))))
   (when (configuration-layer/layer-used-p 'ivy)
@@ -752,6 +762,7 @@ This function is called at the very end of Spacemacs initialization."
        ("FIXME" . "#dc752f")
        ("XXX+" . "#dc752f")
        ("\\?\\?\\?+" . "#dc752f")))
+   '(indicate-empty-lines nil)
    '(js-switch-indent-offset 2)
    '(org-export-with-planning t)
    '(org-fontify-done-headline nil)
@@ -763,15 +774,16 @@ This function is called at the very end of Spacemacs initialization."
        ("DONE" . "chartreuse")))
    '(org-todo-keywords '((sequence "TODO" "WAITING" "CANCEL" "DONE")))
    '(package-selected-packages
-     '(lsp-ui lsp-python-ms lsp-pyright lsp-origami origami lsp-ivy flycheck-ycmd flycheck-rtags flycheck-pos-tip ccls toml-mode ron-mode racer pos-tip rust-mode helm-gtags helm helm-core ggtags flycheck-rust dap-mode lsp-treemacs bui lsp-mode treemacs cfrs pfuture ace-window spinner counsel-gtags cargo github-review tern yapfify xterm-color ws-butler wgrep web-beautify vmd-mode visual-regexp uuidgen use-package unkillable-scratch unicode-fonts unfill undo-tree translate-mode toc-org terminal-here tagedit symon string-inflection string-edit sphinx-doc spaceline-all-the-icons smex smeargle smartparens slim-mode shell-pop seti-theme scss-mode sass-mode reveal-in-osx-finder quickrun pytest pyenv-mode pydoc py-isort pug-mode prettier-js posframe poetry pippel pipenv pip-requirements persp-mode persistent-scratch pcre2el password-generator overseer osx-trash osx-dictionary osx-clipboard orgit-forge org-superstar org-rich-yank org-present org-pomodoro org-mime org-download org-contrib org-cliplink npm-mode nose nodejs-repl nginx-mode nameless mwim multi-term multi-line mu4e-maildirs-extension mu4e-alert mmm-mode markdown-toc macrostep lorem-ipsum livid-mode live-py-mode link-hint launchctl json-reformat json-navigator js2-refactor js-doc ivy-yasnippet ivy-xref ivy-rtags ivy-hydra ivy-avy inspector importmagic impatient-mode hybrid-mode hungry-delete helpful helm-make google-c-style godoctor go-translate go-tag go-rename go-impl go-guru go-gen-test go-fill-struct go-eldoc gnuplot gitignore-templates git-timemachine git-modes git-messenger git-link gh-md gendoxy fuzzy font-lock+ flycheck-package flycheck-elsa flx fancy-battery eyebrowse expand-region evil-org eval-sexp-fu eshell-z eshell-prompt-extras esh-help emr emmet-mode elisp-slime-nav elisp-def editorconfig drag-stuff dotenv-mode dockerfile-mode docker disaster dired-quick-sort diminish diff-hl cython-mode cpp-auto-include counsel-projectile counsel-css company-ycmd company-web company-rtags company-go company-c-headers company-anaconda cmake-mode clean-aindent-mode browse-at-remote blacken bind-map auto-yasnippet auto-compile aggressive-indent ag ac-ispell)))
+     '(gameoflife keyfreq achievements lsp-ui lsp-python-ms lsp-pyright lsp-origami origami lsp-ivy flycheck-ycmd flycheck-rtags flycheck-pos-tip ccls toml-mode ron-mode racer pos-tip rust-mode helm-gtags helm helm-core ggtags flycheck-rust dap-mode lsp-treemacs bui lsp-mode treemacs cfrs pfuture ace-window spinner counsel-gtags cargo github-review tern yapfify xterm-color ws-butler wgrep web-beautify vmd-mode visual-regexp uuidgen use-package unkillable-scratch unicode-fonts unfill undo-tree translate-mode toc-org terminal-here tagedit symon string-inflection string-edit sphinx-doc spaceline-all-the-icons smex smeargle smartparens slim-mode shell-pop seti-theme scss-mode sass-mode reveal-in-osx-finder quickrun pytest pyenv-mode pydoc py-isort pug-mode prettier-js posframe poetry pippel pipenv pip-requirements persp-mode persistent-scratch pcre2el password-generator overseer osx-trash osx-dictionary osx-clipboard orgit-forge org-superstar org-rich-yank org-present org-pomodoro org-mime org-download org-contrib org-cliplink npm-mode nose nodejs-repl nginx-mode nameless mwim multi-term multi-line mu4e-maildirs-extension mu4e-alert mmm-mode markdown-toc macrostep lorem-ipsum livid-mode live-py-mode link-hint launchctl json-reformat json-navigator js2-refactor js-doc ivy-yasnippet ivy-xref ivy-rtags ivy-hydra ivy-avy inspector importmagic impatient-mode hybrid-mode hungry-delete helpful helm-make google-c-style godoctor go-translate go-tag go-rename go-impl go-guru go-gen-test go-fill-struct go-eldoc gnuplot gitignore-templates git-timemachine git-modes git-messenger git-link gh-md gendoxy fuzzy font-lock+ flycheck-package flycheck-elsa flx fancy-battery eyebrowse expand-region evil-org eval-sexp-fu eshell-z eshell-prompt-extras esh-help emr emmet-mode elisp-slime-nav elisp-def editorconfig drag-stuff dotenv-mode dockerfile-mode docker disaster dired-quick-sort diminish diff-hl cython-mode cpp-auto-include counsel-projectile counsel-css company-ycmd company-web company-rtags company-go company-c-headers company-anaconda cmake-mode clean-aindent-mode browse-at-remote blacken bind-map auto-yasnippet auto-compile aggressive-indent ag ac-ispell)))
   (custom-set-faces
    ;; custom-set-faces was added by Custom.
    ;; If you edit it by hand, you could mess it up, so be careful.
    ;; Your init file should contain only one such instance.
    ;; If there is more than one, they won't work right.
    '(font-lock-comment-face ((t (:foreground "gray36"))))
-   '(fringe ((t (:foreground "#2F3C42"))))
+   '(fringe ((t (:background "#151718" :foreground "gray30"))))
    '(highlight ((t (:background "gray32"))))
+   '(highlight-parentheses-highlight ((nil (:weight ultra-bold))) t)
    '(match ((t (:inherit default :background "#151718" :foreground "red" :weight extra-bold))))
    '(mode-line ((t (:background "#0D1011" :foreground "#D4D7D6" :underline "#4F99D3" :family "Monaco"))))
    '(pulse-highlight-face ((t (:extend t :background "chartreuse4"))))
