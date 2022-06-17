@@ -278,7 +278,7 @@ It should only modify the values of Spacemacs settings."
    ;; Takes effect only if `spacemacs-evil' layer is enabled.
    ;; NOTICE: `spacemacs-evil' is included in `spacemacs' distribution.
    ;; See `dotspacemacs-distribution'.
-   dotspacemacs-evil-show-empty-line-indicators nil
+   dotspacemacs-evil-show-empty-line-indicators t
 
    ;; If non-nil show the version string in the Spacemacs buffer. It will
    ;; appear as (spacemacs version)@(emacs version)
@@ -779,7 +779,7 @@ This function is called at the very end of Spacemacs initialization."
        ("DONE" . "chartreuse")))
    '(org-todo-keywords '((sequence "TODO" "WAITING" "CANCEL" "DONE")))
    '(package-selected-packages
-     '()))
+     '(treemacs-evil evil-easymotion dap-mode bui yasnippet-snippets yapfify yaml-mode xterm-color ws-butler which-key wgrep web-mode web-beautify vterm vmd-mode visual-regexp vim-powerline uuidgen use-package unkillable-scratch unicode-fonts unfill undo-tree treemacs-projectile treemacs-persp treemacs-magit treemacs-icons-dired treemacs-all-the-icons translate-mode toml-mode toc-org tide terminal-here tagedit symon string-inflection string-edit sphinx-doc spacemacs-whitespace-cleanup spaceline-all-the-icons space-doc smex smeargle smartparens slim-mode shell-pop seti-theme scss-mode sass-mode rust-mode ron-mode reveal-in-osx-finder quickrun pytest pylookup pyenv-mode pydoc py-isort pug-mode prettier-js poetry pippel pipenv pip-requirements persistent-scratch pcre2el password-generator overseer osx-trash osx-dictionary osx-clipboard orgit-forge org-superstar org-rich-yank org-present org-pomodoro org-mime org-download org-contrib org-cliplink npm-mode nose nodejs-repl nginx-mode nameless mwim multi-term multi-line mu4e-maildirs-extension mu4e-alert mmm-mode markdown-toc macrostep lsp-ui lsp-treemacs lsp-python-ms lsp-pyright lsp-origami lsp-ivy lorem-ipsum livid-mode live-py-mode link-hint launchctl json-reformat json-navigator js2-refactor js-doc ivy-yasnippet ivy-xref ivy-rtags ivy-hydra ivy-avy inspector importmagic impatient-mode hybrid-mode hungry-delete holy-mode helpful help-fns+ helm-make google-c-style godoctor go-translate go-tag go-rename go-impl go-guru go-gen-test go-fill-struct go-eldoc gnuplot gitignore-templates git-timemachine git-modes git-messenger git-link gh-md gendoxy fuzzy font-lock+ flycheck-ycmd flycheck-rust flycheck-rtags flycheck-pos-tip flycheck-package flycheck-elsa flx fancy-battery eyebrowse expand-region evil-org evil-evilified-state eval-sexp-fu eshell-z eshell-prompt-extras esh-help emr emmet-mode elisp-slime-nav elisp-def editorconfig drag-stuff dotenv-mode dockerfile-mode docker disaster dired-quick-sort diminish diff-hl cython-mode cpp-auto-include counsel-projectile counsel-css company-ycmd company-web company-rtags company-go company-c-headers company-anaconda code-cells cmake-mode clean-aindent-mode ccls cargo browse-at-remote blacken bind-map auto-yasnippet auto-compile aggressive-indent ag ac-ispell)))
   (custom-set-faces
    ;; custom-set-faces was added by Custom.
    ;; If you edit it by hand, you could mess it up, so be careful.
