@@ -86,39 +86,39 @@ This function should only modify configuration layer settings."
      (markdown :variables
                markdown-live-preview-engine 'vmd)
      ;; multiple-cursors
-     (mu4e :variables
-           mu4e-installation-path (expand-file-name "~/repo/open-source/mu/dist/share/emacs/site-lisp/mu4e")
-           mu4e-enable-mode-line t
-           mu4e-enable-notifications t
-           mu4e-enable-async-operations t
-           mu4e-sent-folder   "/sent"
-           mu4e-drafts-folder "/drafts"
-           mu4e-trash-folder  "/trash"
-           mu4e-refile-folder "/archive"
-           mu4e-update-interval 120
-           mu4e-autorun-background-at-startup t
-           mu4e-org-compose-support t
-           mu4e-org-support t
-           mu4e-org-link-support t
-           org-mu4e-convert-to-html t
-           mu4e-get-mail-command "mbsync -La"
-           mu4e-headers-date-format "%Y-%m-%d %H:%M:%S"
-           mu4e-headers-unread-mark '("u" . "")
-           mu4e-headers-draft-mark '("D" . "")
-           mu4e-headers-flagged-mark '("F" . "")
-           mu4e-headers-new-mark '("N" . "")
-           mu4e-headers-passed-mark '("P" . "")
-           mu4e-headers-replied-mark '("R" . "")
-           mu4e-headers-seen-mark '("" . "")
-           mu4e-headers-trashed-mark '("" . "")
-           mu4e-headers-attach-mark '("@" . "")
-           mu4e-headers-encrypted-mark '("x" . "")
-           mu4e-headers-signed-mark '("s" . "")
-           mu4e-headers-fields '((:human-date . 24)
-                                 (:from . 24)
-                                 (:flags . 12)
-                                 (:subject))
-           mu4e-use-fancy-chars nil)
+     ;; (mu4e :variables
+     ;;       mu4e-installation-path (expand-file-name "~/repo/open-source/mu/dist/share/emacs/site-lisp/mu4e")
+     ;;       mu4e-enable-mode-line t
+     ;;       mu4e-enable-notifications t
+     ;;       mu4e-enable-async-operations t
+     ;;       mu4e-sent-folder   "/sent"
+     ;;       mu4e-drafts-folder "/drafts"
+     ;;       mu4e-trash-folder  "/trash"
+     ;;       mu4e-refile-folder "/archive"
+     ;;       mu4e-update-interval 120
+     ;;       mu4e-autorun-background-at-startup t
+     ;;       mu4e-org-compose-support t
+     ;;       mu4e-org-support t
+     ;;       mu4e-org-link-support t
+     ;;       org-mu4e-convert-to-html t
+     ;;       mu4e-get-mail-command "mbsync -La"
+     ;;       mu4e-headers-date-format "%Y-%m-%d %H:%M:%S"
+     ;;       mu4e-headers-unread-mark '("u" . "")
+     ;;       mu4e-headers-draft-mark '("D" . "")
+     ;;       mu4e-headers-flagged-mark '("F" . "")
+     ;;       mu4e-headers-new-mark '("N" . "")
+     ;;       mu4e-headers-passed-mark '("P" . "")
+     ;;       mu4e-headers-replied-mark '("R" . "")
+     ;;       mu4e-headers-seen-mark '("" . "")
+     ;;       mu4e-headers-trashed-mark '("" . "")
+     ;;       mu4e-headers-attach-mark '("@" . "")
+     ;;       mu4e-headers-encrypted-mark '("x" . "")
+     ;;       mu4e-headers-signed-mark '("s" . "")
+     ;;       mu4e-headers-fields '((:human-date . 24)
+     ;;                             (:from . 24)
+     ;;                             (:flags . 12)
+     ;;                             (:subject))
+     ;;       mu4e-use-fancy-chars nil)
      nginx
      org
      ;; protobuf
