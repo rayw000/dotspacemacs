@@ -660,7 +660,9 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
    scroll-bar-mode nil
    ag-highlight-search t
    default-directory (expand-file-name "~/")
-   source-directory (expand-file-name "~/repo/open-source/emacs"))
+   source-directory (expand-file-name "~/repo/open-source/emacs")
+   ls-lisp-dirs-first t
+   ls-lisp-use-insert-directory-program nil)
   (when (fboundp 'native-compile)
     (setq comp-deferred-compilation-deny-list '("powerline")
           native-comp-async-report-warnings-errors nil)
