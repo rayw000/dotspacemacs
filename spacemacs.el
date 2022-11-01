@@ -57,7 +57,8 @@ This function should only modify configuration layer settings."
      ;; (chinese :variables
      ;;          chinese-enable-avy-pinyin nil)
      ;; dap
-     docker
+     (docker :variables
+             docker-exclude-packages '(docker-tramp))
      emacs-lisp
      (git :variables
           magit-diff-refine-hunk t)
