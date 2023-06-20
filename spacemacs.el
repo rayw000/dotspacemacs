@@ -32,7 +32,7 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(
+   '(sql
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
@@ -53,13 +53,14 @@ This function should only modify configuration layer settings."
             ;; c-c++-dap-adapters '(dap-lldb dap-cpptools)
             )
      cmake
-     ;; csv
+     csv
      ;; (chinese :variables
      ;;          chinese-enable-avy-pinyin nil)
      ;; dap
      (docker :variables
              docker-exclude-packages '(docker-tramp))
-     emacs-lisp
+     (emacs-lisp)
+     (erlang)
      (git :variables
           magit-diff-refine-hunk t)
      go
@@ -83,6 +84,7 @@ This function should only modify configuration layer settings."
           lsp-headerline-arrow ">"
           lsp-treemacs-theme "Iconless"
           lsp-file-watch-threshold 4096)
+     lua
      (markdown :variables
                markdown-live-preview-engine 'vmd)
      ;; multiple-cursors
@@ -120,7 +122,8 @@ This function should only modify configuration layer settings."
      ;;                             (:subject))
      ;;       mu4e-use-fancy-chars nil)
      nginx
-     org
+     (org :variables
+          org-enable-reveal-js-support t)
      ;; protobuf
      (rust :variables
            lsp-rust-server 'rust-analyzer
@@ -128,15 +131,15 @@ This function should only modify configuration layer settings."
            flycheck-rust-cargo-executable (expand-file-name "~/.cargo/bin/cargo")
            cargo-process--command-watch "watch -x run")
      (shell :variables
+            vterm-keymap-exceptions '("C-c" "C-x" "C-u" "C-g" "C-h" "C-l" "M-x" "M-o" "C-y" "M-y" "M-`")
             shell-default-shell 'vterm
             shell-default-height 30
             shell-default-position 'bottom
             shell-enable-smart-eshell t)
      (python :variables
              python-indent-offset 4
-             ;; python-backend 'lsp
-             ;; python-lsp-server 'pyright
-             )
+             python-backend 'lsp
+             python-lsp-server 'pyright)
      spacemacs-editing
      (spacemacs-modeline :variables
                          spaceline-minor-modes-p nil)
@@ -175,8 +178,13 @@ This function should only modify configuration layer settings."
    ;; `dotspacemacs/user-config'. To use a local version of a package, use the
    ;; `:location' property: '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
-   dotspacemacs-additional-packages '(ag visual-regexp)
-
+   dotspacemacs-additional-packages '(ag
+                                      gptel
+                                      visual-regexp
+                                      (copilot :location (recipe
+                                                          :fetcher github
+                                                          :repo "zerolfx/copilot.el"
+                                                          :files ("*.el" "dist"))))
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
 
@@ -463,7 +471,7 @@ It should only modify the values of Spacemacs settings."
 
    ;; If non-nil the frame is fullscreen when Emacs starts up. (default nil)
    ;; (Emacs 24.4+ only)
-   dotspacemacs-fullscreen-at-startup nil
+   dotspacemacs-fullscreen-at-startup t
 
    ;; If non-nil `spacemacs/toggle-fullscreen' will not use native fullscreen.
    ;; Use to disable fullscreen animations in OSX. (default nil)
@@ -475,8 +483,8 @@ It should only modify the values of Spacemacs settings."
    dotspacemacs-maximized-at-startup nil
 
    ;; If non-nil the frame is undecorated when Emacs starts up. Combine this
-   ;; variable with `dotspacemacs-maximized-at-startup' in OSX to obtain
-   ;; borderless fullscreen. (default nil)
+   ;; variable with `dotspacemacs-maximized-at-startup' to obtain fullscreen
+   ;; without external boxes. Also disables the internal border. (default nil)
    dotspacemacs-undecorated-at-startup nil
 
    ;; A value from the range (0..100), in increasing opacity, which describes
@@ -488,6 +496,11 @@ It should only modify the values of Spacemacs settings."
    ;; the transparency level of a frame when it's inactive or deselected.
    ;; Transparency can be toggled through `toggle-transparency'. (default 90)
    dotspacemacs-inactive-transparency 90
+
+   ;; A value from the range (0..100), in increasing opacity, which describes the
+   ;; transparency level of a frame background when it's active or selected. Transparency
+   ;; can be toggled through `toggle-background-transparency'. (default 90)
+   dotspacemacs-background-transparency 90
 
    ;; If non-nil show the titles of transient states. (default t)
    dotspacemacs-show-transient-state-title t
@@ -598,7 +611,9 @@ It should only modify the values of Spacemacs settings."
    ;; (default nil - same as frame-title-format)
    dotspacemacs-icon-title-format nil
 
-   ;; Show trailing whitespace (default t)
+   ;; Color highlight trailing whitespace in all prog-mode and text-mode derived
+   ;; modes such as c++-mode, python-mode, emacs-lisp, html-mode, rst-mode etc.
+   ;; (default t)
    dotspacemacs-show-trailing-whitespace t
 
    ;; Delete whitespace while saving buffer. Possible values are `all'
@@ -683,6 +698,8 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
+  (when (featurep 'gptel)
+    (setq gptel-api-key (getenv "OPENAI_API_KEY")))
   (menu-bar-mode -1)
   (global-set-key (kbd "M-`") 'other-window)
   (when (functionp 'projectile-ag)
@@ -756,6 +773,92 @@ This function is called at the very end of Spacemacs initialization."
    ;; If there is more than one, they won't work right.
    '(ansi-color-names-vector
      ["#0a0814" "#f2241f" "#67b11d" "#b1951d" "#4f97d7" "#a31db1" "#28def0" "#b2b2b2"])
+   '(connection-local-criteria-alist
+     '(((:application tramp :machine "bogon")
+        tramp-connection-local-darwin-ps-profile)
+       ((:application eshell)
+        eshell-connection-default-profile)
+       ((:application tramp :machine "localhost")
+        tramp-connection-local-darwin-ps-profile)
+       ((:application tramp :machine "Rays-MBP.local")
+        tramp-connection-local-darwin-ps-profile)
+       ((:application tramp)
+        tramp-connection-local-default-system-profile tramp-connection-local-default-shell-profile)))
+   '(connection-local-profile-alist
+     '((eshell-connection-default-profile
+        (eshell-path-env-list))
+       (tramp-connection-local-darwin-ps-profile
+        (tramp-process-attributes-ps-args "-acxww" "-o" "pid,uid,user,gid,comm=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" "-o" "state=abcde" "-o" "ppid,pgid,sess,tty,tpgid,minflt,majflt,time,pri,nice,vsz,rss,etime,pcpu,pmem,args")
+        (tramp-process-attributes-ps-format
+         (pid . number)
+         (euid . number)
+         (user . string)
+         (egid . number)
+         (comm . 52)
+         (state . 5)
+         (ppid . number)
+         (pgrp . number)
+         (sess . number)
+         (ttname . string)
+         (tpgid . number)
+         (minflt . number)
+         (majflt . number)
+         (time . tramp-ps-time)
+         (pri . number)
+         (nice . number)
+         (vsize . number)
+         (rss . number)
+         (etime . tramp-ps-time)
+         (pcpu . number)
+         (pmem . number)
+         (args)))
+       (tramp-connection-local-busybox-ps-profile
+        (tramp-process-attributes-ps-args "-o" "pid,user,group,comm=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" "-o" "stat=abcde" "-o" "ppid,pgid,tty,time,nice,etime,args")
+        (tramp-process-attributes-ps-format
+         (pid . number)
+         (user . string)
+         (group . string)
+         (comm . 52)
+         (state . 5)
+         (ppid . number)
+         (pgrp . number)
+         (ttname . string)
+         (time . tramp-ps-time)
+         (nice . number)
+         (etime . tramp-ps-time)
+         (args)))
+       (tramp-connection-local-bsd-ps-profile
+        (tramp-process-attributes-ps-args "-acxww" "-o" "pid,euid,user,egid,egroup,comm=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" "-o" "state,ppid,pgid,sid,tty,tpgid,minflt,majflt,time,pri,nice,vsz,rss,etimes,pcpu,pmem,args")
+        (tramp-process-attributes-ps-format
+         (pid . number)
+         (euid . number)
+         (user . string)
+         (egid . number)
+         (group . string)
+         (comm . 52)
+         (state . string)
+         (ppid . number)
+         (pgrp . number)
+         (sess . number)
+         (ttname . string)
+         (tpgid . number)
+         (minflt . number)
+         (majflt . number)
+         (time . tramp-ps-time)
+         (pri . number)
+         (nice . number)
+         (vsize . number)
+         (rss . number)
+         (etime . number)
+         (pcpu . number)
+         (pmem . number)
+         (args)))
+       (tramp-connection-local-default-shell-profile
+        (shell-file-name . "/bin/sh")
+        (shell-command-switch . "-c"))
+       (tramp-connection-local-default-system-profile
+        (path-separator . ":")
+        (null-device . "/dev/null"))))
    '(evil-want-Y-yank-to-eol nil)
    '(hl-todo-keyword-faces
      '(("TODO" . "#dc752f")
@@ -775,6 +878,7 @@ This function is called at the very end of Spacemacs initialization."
        ("\\?\\?\\?+" . "#dc752f")))
    '(indicate-empty-lines nil)
    '(js-switch-indent-offset 2)
+   '(lsp-clients-deno-config "./tsconfig.json")
    '(org-export-with-planning t)
    '(org-fontify-done-headline nil)
    '(org-fontify-todo-headline nil)
@@ -785,7 +889,7 @@ This function is called at the very end of Spacemacs initialization."
        ("DONE" . "chartreuse")))
    '(org-todo-keywords '((sequence "TODO" "WAITING" "CANCEL" "DONE")))
    '(package-selected-packages
-     '(dap-mode bui yasnippet-snippets yapfify yaml-mode xterm-color ws-butler writeroom-mode winum which-key wgrep web-mode web-beautify vterm volatile-highlights vmd-mode visual-regexp vim-powerline vim-empty-lines-mode uuidgen use-package unkillable-scratch unicode-fonts unfill undo-tree treemacs-projectile treemacs-persp treemacs-magit treemacs-icons-dired treemacs-all-the-icons translate-mode toml-mode toc-org tide terminal-here tagedit symon symbol-overlay string-inflection string-edit sphinx-doc spacemacs-whitespace-cleanup spacemacs-purpose-popwin spaceline-all-the-icons space-doc smex smeargle slim-mode shell-pop seti-theme scss-mode sass-mode rust-mode ron-mode reveal-in-osx-finder restart-emacs rainbow-delimiters quickrun pytest pylookup pyenv-mode pydoc py-isort pug-mode prettier-js popwin poetry pippel pipenv pip-requirements persistent-scratch pcre2el password-generator paradox overseer osx-trash osx-dictionary osx-clipboard orgit-forge org-superstar org-rich-yank org-projectile org-present org-pomodoro org-mime org-download org-contrib org-cliplink open-junk-file npm-mode nose nodejs-repl nginx-mode nameless mwim multi-term multi-line mu4e-maildirs-extension mu4e-alert mmm-mode markdown-toc macrostep lsp-ui lsp-treemacs lsp-python-ms lsp-pyright lsp-origami lsp-ivy lorem-ipsum livid-mode live-py-mode link-hint launchctl json-reformat json-navigator js2-refactor js-doc ivy-yasnippet ivy-xref ivy-rtags ivy-purpose ivy-hydra ivy-avy inspector info+ indent-guide importmagic impatient-mode hybrid-mode hungry-delete holy-mode hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt helpful help-fns+ helm-make google-translate google-c-style golden-ratio godoctor go-translate go-tag go-rename go-impl go-guru go-gen-test go-fill-struct go-eldoc gnuplot gitignore-templates git-timemachine git-modes git-messenger git-link gh-md gendoxy fuzzy font-lock+ flyspell-correct-ivy flycheck-ycmd flycheck-rust flycheck-rtags flycheck-pos-tip flycheck-package flycheck-elsa flx-ido fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-terminal-cursor-changer evil-surround evil-org evil-numbers evil-nerd-commenter evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-evilified-state evil-escape evil-ediff evil-collection evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help emr emmet-mode elisp-slime-nav elisp-def editorconfig dumb-jump drag-stuff dotenv-mode dockerfile-mode docker disaster dired-quick-sort diminish diff-hl devdocs cython-mode cpp-auto-include counsel-projectile counsel-css company-ycmd company-web company-rtags company-go company-c-headers company-anaconda column-enforce-mode code-cells cmake-mode clean-aindent-mode centered-cursor-mode ccls cargo browse-at-remote blacken auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile aggressive-indent ag ace-link ac-ispell)))
+     '(company-tabnine dash emacsql forge orgit evil-collection git-commit git-link git-modes git-timemachine go-gen-test go-translate gptel helpful hl-todo impatient-mode js2-mode live-py-mode lsp-mode lsp-treemacs macrostep magit magit-section org-re-reveal org-rich-yank orgit-forge package-lint pcre2el posframe symbol-overlay treepy vterm erlang format-sql hive edit-indirect sqlup-mode copilot dap-mode lsp-docker bui holiday-pascha-etc writeroom-mode link-hint docker spacemacs-whitespace-cleanup yasnippet-snippets evil-lion winum ivy-hydra disaster google-translate paradox evil-cleverparens js2-refactor evil-iedit-state treemacs-magit ivy-yasnippet diff-hl ivy-avy elisp-def gendoxy indent-guide auto-compile devdocs ob-restclient org-superstar ag web-beautify visual-regexp org-pomodoro evil-textobj-line dockerfile-mode ron-mode flycheck-elsa font-lock+ evil-visual-mark-mode osx-trash evil-unimpaired poetry aggressive-indent ivy-xref volatile-highlights elisp-slime-nav term-cursor symon treemacs-projectile nose translate-mode scss-mode nameless highlight-numbers typescript-mode go-eldoc clean-aindent-mode slim-mode diminish blacken highlight-parentheses flycheck-ycmd drag-stuff esh-help string-inflection nodejs-repl org-mime space-doc js-doc unkillable-scratch spacemacs-purpose-popwin osx-dictionary org-projectile company-restclient ivy-purpose vi-tilde-fringe json-mode sass-mode expand-region launchctl godoctor helm-make inspector web-mode uuidgen livid-mode evil-anzu cmake-mode importmagic vmd-mode cargo company-ycmd fuzzy which-key go-impl osx-clipboard emr hybrid-mode lorem-ipsum evil-escape fancy-battery help-fns+ flx-ido gh-md tide go-guru tagedit dumb-jump lsp-python-ms gitignore-templates pippel terminal-here evil-surround evil-lisp-state eval-sexp-fu prettier-js markdown-toc company-rtags seti-theme undo-tree emmet-mode org-contrib golden-ratio pytest company-lua auto-highlight-symbol pug-mode ob-http multi-term evil-matchit evil-visualstar go-tag go-fill-struct org-download csv-mode nginx-mode flycheck-rust pyenv-mode dotenv-mode ace-link json-reformat toc-org shell-pop sphinx-doc go-rename smeargle toml-mode company-c-headers gnuplot restart-emacs yapfify flycheck-rtags flycheck-pos-tip evil-goggles google-c-style lsp-ui highlight-indentation evil-numbers evil-tutor holy-mode ivy-rtags evil-exchange hide-comnt npm-mode evil-args eshell-prompt-extras hungry-delete lsp-origami pydoc spaceline-all-the-icons yaml-mode ws-butler flycheck-package company-web editorconfig column-enforce-mode eshell-z quickrun multi-line company-go unicode-fonts open-junk-file unfill treemacs-persp multi-vterm evil-org smex rainbow-delimiters json-navigator persistent-scratch evil-evilified-state flyspell-correct-ivy counsel-css reveal-in-osx-finder overseer treemacs-all-the-icons wgrep cpp-auto-include code-cells ccls centered-cursor-mode evil-indent-plus auto-dictionary evil-nerd-commenter org-cliplink lsp-pyright cython-mode pipenv vim-powerline password-generator info+ string-edit-at-point dired-quick-sort pip-requirements auto-yasnippet ac-ispell popwin eyebrowse treemacs-icons-dired company-anaconda counsel-projectile py-isort xterm-color lsp-ivy mmm-mode pylookup org-present git-messenger browse-at-remote rust-mode mwim)))
   (custom-set-faces
    ;; custom-set-faces was added by Custom.
    ;; If you edit it by hand, you could mess it up, so be careful.
