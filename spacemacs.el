@@ -51,6 +51,7 @@ This function should only modify configuration layer settings."
             ;; c-c++-lsp-enable-semantic-highlight 'rainbow
             c-c++-enable-google-style t
             ;; c-c++-dap-adapters '(dap-lldb dap-cpptools)
+            lsp-ui-sideline-enable nil
             )
      cmake
      csv
@@ -83,6 +84,7 @@ This function should only modify configuration layer settings."
      (lsp :variables
           lsp-headerline-arrow ">"
           lsp-treemacs-theme "Iconless"
+          treemacs-use-all-the-icons-theme t
           lsp-file-watch-threshold 4096)
      lua
      (markdown :variables
@@ -161,7 +163,8 @@ This function should only modify configuration layer settings."
                       syntax-checking-enable-by-default nil)
      ;; tern
      (treemacs :variables
-               treemacs-use-all-the-icons-theme t)
+               treemacs-use-all-the-icons-theme t
+               treemacs-no-png-images t)
      typescript
      unicode-fonts
      (version-control :variables
@@ -207,6 +210,12 @@ before layer configuration.
 It should only modify the values of Spacemacs settings."
   ;; This setq-default sexp is an exhaustive list of all the supported
   ;; spacemacs settings.
+(setenv "LIBRARY_PATH"
+	(string-join
+	 '("/opt/homebrew/opt/gcc/lib/gcc/13"
+	   "/opt/homebrew/opt/libgccjit/lib/gcc/13"
+	   "/opt/homebrew/opt/gcc/lib/gcc/13/gcc/aarch64-apple-darwin22/13")
+	 ":"))
   (setq-default
    ;; If non-nil then enable support for the portable dumper. You'll need to
    ;; compile Emacs 27 from source following the instructions in file
@@ -698,6 +707,11 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
+  (add-hook 'treemacs-icons-dired-mode-hook
+            (lambda ()
+              (when treemacs-use-all-the-icons-theme
+                (require 'treemacs-all-the-icons)
+                (treemacs-load-theme 'all-the-icons))))
   (when (featurep 'gptel)
     (setq gptel-api-key (getenv "OPENAI_API_KEY")))
   (menu-bar-mode -1)
