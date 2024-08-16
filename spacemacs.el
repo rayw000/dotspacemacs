@@ -32,7 +32,8 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(sql
+   '(
+     sql
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
@@ -126,6 +127,8 @@ This function should only modify configuration layer settings."
      nginx
      (org :variables
           org-enable-reveal-js-support t)
+     (php :variables
+          c-indentation-style "php")
      ;; protobuf
      (rust :variables
            lsp-rust-server 'rust-analyzer
@@ -182,12 +185,24 @@ This function should only modify configuration layer settings."
    ;; `:location' property: '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
    dotspacemacs-additional-packages '(ag
-                                      gptel
+                                      (gptel :variables
+                                             gptel-backend (gptel-make-openai
+                                                               "ChatGPT-CN"
+                                                             :key (getenv "OPENAI_API_KEY")
+                                                             :host "cn.gptapi.asia"
+                                                             :models '("gpt-3.5-turbo" "gpt-3.5-turbo-16k" "gpt-4o-mini"
+                                                                       "gpt-4" "gpt-4o" "gpt-4-turbo" "gpt-4-turbo-preview"
+                                                                       "gpt-4-32k" "gpt-4-1106-preview" "gpt-4-0125-preview")))
                                       visual-regexp
+                                      editorconfig
                                       (copilot :location (recipe
                                                           :fetcher github
-                                                          :repo "zerolfx/copilot.el"
-                                                          :files ("*.el" "dist"))))
+                                                          :repo "copilot-emacs/copilot.el"
+                                                          :files ("*.el" "dist"))
+                                               :variables
+                                               copilot-network-proxy '(:host
+                                                                       "127.0.0.1"
+                                                                       :port 41091)))
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
 
@@ -210,12 +225,12 @@ before layer configuration.
 It should only modify the values of Spacemacs settings."
   ;; This setq-default sexp is an exhaustive list of all the supported
   ;; spacemacs settings.
-(setenv "LIBRARY_PATH"
-	(string-join
-	 '("/opt/homebrew/opt/gcc/lib/gcc/13"
-	   "/opt/homebrew/opt/libgccjit/lib/gcc/13"
-	   "/opt/homebrew/opt/gcc/lib/gcc/13/gcc/aarch64-apple-darwin22/13")
-	 ":"))
+  (setenv "LIBRARY_PATH"
+          (string-join
+           '("/opt/homebrew/opt/gcc/lib/gcc/13"
+             "/opt/homebrew/opt/libgccjit/lib/gcc/13"
+             "/opt/homebrew/opt/gcc/lib/gcc/13/gcc/aarch64-apple-darwin22/13")
+           ":"))
   (setq-default
    ;; If non-nil then enable support for the portable dumper. You'll need to
    ;; compile Emacs 27 from source following the instructions in file
@@ -712,8 +727,6 @@ before packages are loaded."
               (when treemacs-use-all-the-icons-theme
                 (require 'treemacs-all-the-icons)
                 (treemacs-load-theme 'all-the-icons))))
-  (when (featurep 'gptel)
-    (setq gptel-api-key (getenv "OPENAI_API_KEY")))
   (menu-bar-mode -1)
   (global-set-key (kbd "M-`") 'other-window)
   (when (functionp 'projectile-ag)
@@ -732,6 +745,10 @@ before packages are loaded."
   ;;   (add-hook 'company-mode-hook
   ;;             (lambda () (define-key company-mode-map [remap indent-for-tab-command]
   ;;                                    'company-indent-or-complete-common))))
+  ;; (define-key copilot-mode-map (kbd "RET") 'copilot-accept-completion)
+  ;; (define-key copilot-mode-map (kbd "TAB") 'copilot-next-completion)
+  ;; (define-key copilot-mode-map (kbd "M-n") 'copilot-next-completion)
+  ;; (define-key copilot-mode-map (kbd "M-p") 'copilot-previous-completion)
   (when (configuration-layer/layer-used-p 'mu4e)
     (if-let* ((context-file "~/.mu4e.el")
               (file-exists-p context-file))
@@ -891,6 +908,7 @@ This function is called at the very end of Spacemacs initialization."
        ("XXX+" . "#dc752f")
        ("\\?\\?\\?+" . "#dc752f")))
    '(indicate-empty-lines nil)
+   '(jenkinsfile-mode-indent-offset 2)
    '(js-switch-indent-offset 2)
    '(lsp-clients-deno-config "./tsconfig.json")
    '(org-export-with-planning t)
@@ -903,7 +921,8 @@ This function is called at the very end of Spacemacs initialization."
        ("DONE" . "chartreuse")))
    '(org-todo-keywords '((sequence "TODO" "WAITING" "CANCEL" "DONE")))
    '(package-selected-packages
-     '(company-tabnine dash emacsql forge orgit evil-collection git-commit git-link git-modes git-timemachine go-gen-test go-translate gptel helpful hl-todo impatient-mode js2-mode live-py-mode lsp-mode lsp-treemacs macrostep magit magit-section org-re-reveal org-rich-yank orgit-forge package-lint pcre2el posframe symbol-overlay treepy vterm erlang format-sql hive edit-indirect sqlup-mode copilot dap-mode lsp-docker bui holiday-pascha-etc writeroom-mode link-hint docker spacemacs-whitespace-cleanup yasnippet-snippets evil-lion winum ivy-hydra disaster google-translate paradox evil-cleverparens js2-refactor evil-iedit-state treemacs-magit ivy-yasnippet diff-hl ivy-avy elisp-def gendoxy indent-guide auto-compile devdocs ob-restclient org-superstar ag web-beautify visual-regexp org-pomodoro evil-textobj-line dockerfile-mode ron-mode flycheck-elsa font-lock+ evil-visual-mark-mode osx-trash evil-unimpaired poetry aggressive-indent ivy-xref volatile-highlights elisp-slime-nav term-cursor symon treemacs-projectile nose translate-mode scss-mode nameless highlight-numbers typescript-mode go-eldoc clean-aindent-mode slim-mode diminish blacken highlight-parentheses flycheck-ycmd drag-stuff esh-help string-inflection nodejs-repl org-mime space-doc js-doc unkillable-scratch spacemacs-purpose-popwin osx-dictionary org-projectile company-restclient ivy-purpose vi-tilde-fringe json-mode sass-mode expand-region launchctl godoctor helm-make inspector web-mode uuidgen livid-mode evil-anzu cmake-mode importmagic vmd-mode cargo company-ycmd fuzzy which-key go-impl osx-clipboard emr hybrid-mode lorem-ipsum evil-escape fancy-battery help-fns+ flx-ido gh-md tide go-guru tagedit dumb-jump lsp-python-ms gitignore-templates pippel terminal-here evil-surround evil-lisp-state eval-sexp-fu prettier-js markdown-toc company-rtags seti-theme undo-tree emmet-mode org-contrib golden-ratio pytest company-lua auto-highlight-symbol pug-mode ob-http multi-term evil-matchit evil-visualstar go-tag go-fill-struct org-download csv-mode nginx-mode flycheck-rust pyenv-mode dotenv-mode ace-link json-reformat toc-org shell-pop sphinx-doc go-rename smeargle toml-mode company-c-headers gnuplot restart-emacs yapfify flycheck-rtags flycheck-pos-tip evil-goggles google-c-style lsp-ui highlight-indentation evil-numbers evil-tutor holy-mode ivy-rtags evil-exchange hide-comnt npm-mode evil-args eshell-prompt-extras hungry-delete lsp-origami pydoc spaceline-all-the-icons yaml-mode ws-butler flycheck-package company-web editorconfig column-enforce-mode eshell-z quickrun multi-line company-go unicode-fonts open-junk-file unfill treemacs-persp multi-vterm evil-org smex rainbow-delimiters json-navigator persistent-scratch evil-evilified-state flyspell-correct-ivy counsel-css reveal-in-osx-finder overseer treemacs-all-the-icons wgrep cpp-auto-include code-cells ccls centered-cursor-mode evil-indent-plus auto-dictionary evil-nerd-commenter org-cliplink lsp-pyright cython-mode pipenv vim-powerline password-generator info+ string-edit-at-point dired-quick-sort pip-requirements auto-yasnippet ac-ispell popwin eyebrowse treemacs-icons-dired company-anaconda counsel-projectile py-isort xterm-color lsp-ivy mmm-mode pylookup org-present git-messenger browse-at-remote rust-mode mwim)))
+     '(gptel rustic 0blayout company-php ac-php-core xcscope company-phpactor counsel-gtags drupal-mode geben ggtags php-auto-yasnippets php-extras php-mode phpactor composer php-runtime phpcbf phpunit jenkinsfile-mode company-tabnine dash emacsql forge orgit evil-collection git-commit git-link git-modes git-timemachine go-gen-test go-translate helpful hl-todo impatient-mode js2-mode live-py-mode lsp-mode lsp-treemacs macrostep magit magit-section org-re-reveal org-rich-yank orgit-forge package-lint pcre2el posframe symbol-overlay treepy vterm erlang format-sql hive edit-indirect sqlup-mode copilot dap-mode lsp-docker bui holiday-pascha-etc writeroom-mode link-hint docker spacemacs-whitespace-cleanup yasnippet-snippets evil-lion winum ivy-hydra disaster google-translate paradox evil-cleverparens js2-refactor evil-iedit-state treemacs-magit ivy-yasnippet diff-hl ivy-avy elisp-def gendoxy indent-guide auto-compile devdocs ob-restclient org-superstar ag web-beautify visual-regexp org-pomodoro evil-textobj-line dockerfile-mode ron-mode flycheck-elsa font-lock+ evil-visual-mark-mode osx-trash evil-unimpaired poetry aggressive-indent ivy-xref volatile-highlights elisp-slime-nav term-cursor symon treemacs-projectile nose translate-mode scss-mode nameless highlight-numbers typescript-mode go-eldoc clean-aindent-mode slim-mode diminish blacken highlight-parentheses flycheck-ycmd drag-stuff esh-help string-inflection nodejs-repl org-mime space-doc js-doc unkillable-scratch spacemacs-purpose-popwin osx-dictionary org-projectile company-restclient ivy-purpose vi-tilde-fringe json-mode sass-mode expand-region launchctl godoctor helm-make inspector web-mode uuidgen livid-mode evil-anzu cmake-mode importmagic vmd-mode cargo company-ycmd fuzzy which-key go-impl osx-clipboard emr hybrid-mode lorem-ipsum evil-escape fancy-battery help-fns+ flx-ido gh-md tide go-guru tagedit dumb-jump lsp-python-ms gitignore-templates pippel terminal-here evil-surround evil-lisp-state eval-sexp-fu prettier-js markdown-toc company-rtags seti-theme undo-tree emmet-mode org-contrib golden-ratio pytest company-lua auto-highlight-symbol pug-mode ob-http multi-term evil-matchit evil-visualstar go-tag go-fill-struct org-download csv-mode nginx-mode flycheck-rust pyenv-mode dotenv-mode ace-link json-reformat toc-org shell-pop sphinx-doc go-rename smeargle toml-mode company-c-headers gnuplot restart-emacs yapfify flycheck-rtags flycheck-pos-tip evil-goggles google-c-style lsp-ui highlight-indentation evil-numbers evil-tutor holy-mode ivy-rtags evil-exchange hide-comnt npm-mode evil-args eshell-prompt-extras hungry-delete lsp-origami pydoc spaceline-all-the-icons yaml-mode ws-butler flycheck-package company-web editorconfig column-enforce-mode eshell-z quickrun multi-line company-go unicode-fonts open-junk-file unfill treemacs-persp multi-vterm evil-org smex rainbow-delimiters json-navigator persistent-scratch evil-evilified-state flyspell-correct-ivy counsel-css reveal-in-osx-finder overseer treemacs-all-the-icons wgrep cpp-auto-include code-cells ccls centered-cursor-mode evil-indent-plus auto-dictionary evil-nerd-commenter org-cliplink lsp-pyright cython-mode pipenv vim-powerline password-generator info+ string-edit-at-point dired-quick-sort pip-requirements auto-yasnippet ac-ispell popwin eyebrowse treemacs-icons-dired company-anaconda counsel-projectile py-isort xterm-color lsp-ivy mmm-mode pylookup org-present git-messenger browse-at-remote rust-mode mwim))
+   '(url-proxy-services nil))
   (custom-set-faces
    ;; custom-set-faces was added by Custom.
    ;; If you edit it by hand, you could mess it up, so be careful.
